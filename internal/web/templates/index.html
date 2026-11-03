@@ -1,0 +1,12 @@
+{{define "title"}}{{.AppName}}{{end}}
+{{define "content"}}
+<h1>{{.AppName}}</h1>
+<p>A TriStack project with an HTMX-powered web frontend.</p>
+<section id="items"
+         hx-get="/web/items"
+         hx-trigger="load"
+         hx-swap="innerHTML">
+    <p>Loading items…</p>
+</section>
+{{end}}
+{{template "base" .}}

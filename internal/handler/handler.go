@@ -1,0 +1,50 @@
+package handler
+
+import (
+	"errors"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	"my_tristack_app/internal/service"
+)
+
+const maxBodyBytes = 1 << 20
+
+type Handler struct {
+	items *service.ItemService
+}
+
+func NewHandler(items *service.ItemService) Handler {
+	return Handler{items: items}
+}
+
+func (h Handler) ListItems(c *gin.Context) {
+	items, err := h.items.ListItems(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not list items"})
+		return
+	}
+	c.JSON(http.StatusOK, items)
+}
+
+func (h Handler) CreateItem(c *gin.Context) {
+	var body struct {
+		Name string `json:"name"`
+	}
+	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, maxBodyBytes)
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
+		return
+	}
+	item, err := h.items.CreateItem(c.Request.Context(), body.Name)
+	if err != nil {
+		if errors.Is(err, service.ErrInvalidInput) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create item"})
+		return
+	}
+	c.JSON(http.StatusCreated, item)
+}

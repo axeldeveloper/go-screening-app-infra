@@ -1,0 +1,16 @@
+// TriStack configuration for this project.
+{
+  "version": "1.0.9",
+  "createdAt": "2026-11-03T15:39:12.911Z",
+  "reproducibleCommand": "tristack my-tristack-app --language go --framework gin --frontend htmx --orm sqlc --migrations golang-migrate --database postgres --package-manager go --addons docker,golangci-lint --git --install",
+  "language": "go",
+  "framework": "gin",
+  "orm": "sqlc",
+  "migrations": "golang-migrate",
+  "database": "postgres",
+  "packageManager": "go",
+  "addons": [
+    "docker",
+    "golangci-lint"
+  ]
+}
