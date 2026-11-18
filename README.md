@@ -78,3 +78,20 @@ set -a && . ./env.example && set +a
 # Windows PowerShell
 Get-Content ./env.example | Where-Object { $_ -match '=' -and $_ -notmatch '^\s*#' } | ForEach-Object { $n, $v = $_ -split '=', 2; Set-Item -Path "env:$n" -Value $v }
 ```
+
+
+# Gate Usage
+
+docker build --target gate --build-arg GATE_TARGET=generate-check --progress=plain --no-cache-filter gate .
+
+
+docker build --target gate --build-arg GATE_TARGET=lint --progress=plain --no-cache .
+
+# lista dos achados
+docker build --target gate --progress=plain . 2>&1 | tee lint.log
+
+# contagem por linter
+grep -oE '\([a-z]+\)$' lint.log | sort | uniq -c | sort -rn
+
+# lista dos achados
+grep -E '\((revive|gosec|errcheck|staticcheck|gocritic|errorlint|govet)\)$' lint.log

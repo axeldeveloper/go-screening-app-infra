@@ -13,16 +13,20 @@ import (
 	"my_screening_app/internal/repository"
 )
 
+// ErrInvalidInput is returned when the input to a service method is invalid.
 var ErrInvalidInput = errors.New("invalid input")
 
+// ItemService contém as regras de negócio de itens.
 type ItemService struct {
 	repo repository.ItemRepository
 }
 
+// NewItemService cria uma nova instância de ItemService.
 func NewItemService(repo repository.ItemRepository) *ItemService {
 	return &ItemService{repo: repo}
 }
 
+// CreateItem valida a entrada e cria um item.
 func (s *ItemService) CreateItem(ctx context.Context, name string) (model.Item, error) {
 	if err := validateName(name); err != nil {
 		return model.Item{}, err
@@ -38,6 +42,7 @@ func (s *ItemService) CreateItem(ctx context.Context, name string) (model.Item, 
 	return item, nil
 }
 
+// ListItems lista todos os itens.
 func (s *ItemService) ListItems(ctx context.Context) ([]model.Item, error) {
 	items, err := s.repo.List(ctx)
 	if err != nil {

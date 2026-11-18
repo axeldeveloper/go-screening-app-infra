@@ -16,6 +16,7 @@ RUN CGO_ENABLED=0 GOBIN=/out go install -tags 'postgres' github.com/golang-migra
 FROM golang:1.25 AS gate
 WORKDIR /app
 ARG COVER_MIN=30
+ARG GATE_TARGET=gate
 
 COPY go.mod go.sum* ./
 RUN --mount=type=cache,target=/go/pkg/mod go mod download
@@ -26,7 +27,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     git init -q . \
     && git add -A \
     && git -c user.email=gate@local -c user.name=gate commit -qm snapshot \
-    && COVER_MIN=$COVER_MIN make gate
+    && COVER_MIN=$COVER_MIN make $GATE_TARGET
 
 # ---- Runtime (último estágio = alvo padrão do docker build) ----
 FROM gcr.io/distroless/static-debian12:nonroot

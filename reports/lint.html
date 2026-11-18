@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>golangci-lint</title>
+    <link rel="shortcut icon" type="image/png" href="https://golangci-lint.run/favicon-32x32.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css"
+          integrity="sha512-byErQdWdTqREz6DLAA9pCnLbdoGGhXfU6gm1c8bkf7F51JVmUBlayGe2A31VpXWQP+eiJ3ilTAZHCR3vmMyybA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css"
+          integrity="sha512-kZqGbhf9JTB4bVJ0G8HCkqmaPcRgo88F0dneK30yku5Y/dep7CZfCnNml2Je/sY4lBoqoksXz4PtVXS4GHSUzQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"
+            integrity="sha512-s+tOYYcC3Jybgr9mVsdAxsRYlGNq4mlAurOrfNuGMQ/SCofNPu92tjE7YRZCsdEtWL1yGkqk15fU/ark206YTg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/go.min.js"
+            integrity="sha512-+UYV2NyyynWEQcZ4sMTKmeppyV331gqvMOGZ61/dqc89Tn1H40lF05ACd03RSD9EWwGutNwKj256mIR8waEJBQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"
+            integrity="sha512-qlzIeUtTg7eBpmEaS12NZgxz52YYZVF5myj89mjJEesBd/oE9UPsYOX2QAXzvOAZYEvQohKdcY8zKE02ifXDmA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"
+            integrity="sha512-9jGNr5Piwe8nzLLYTk8QrEMPfjGU0px80GYzKZUxi7lmCfrBjtyCc1V5kkS5vxVwwIB7Qpzc7UxLiQxfAN30dw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+            integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div id="content"></div>
+    </div>
+</section>
+<script>
+    const data = {"Issues":[{"Title":"exitAfterDefer: log.Fatalf will exit, and `defer cancel()` will not run","Pos":"cmd/api/main.go:74:3","Linter":"gocritic","Code":"\t\tlog.Fatalf(\"graceful shutdown failed: %v\", err)"},{"Title":"exported: exported type Config should have comment or be unexported","Pos":"internal/config/config.go:5:6","Linter":"revive","Code":"type Config struct {"},{"Title":"exported: exported function Load should have comment or be unexported","Pos":"internal/config/config.go:10:1","Linter":"revive","Code":"func Load() Config {"},{"Title":"package-comments: should have a package comment","Pos":"internal/db/db.go:1:1","Linter":"revive","Code":"package db"},{"Title":"blank-imports: a blank import should be only in a main or test package, or have a comment justifying it","Pos":"internal/db/db.go:10:2","Linter":"revive","Code":"\t_ \"github.com/jackc/pgx/v5/stdlib\""},{"Title":"exported: exported function Connect should have comment or be unexported","Pos":"internal/db/db.go:20:1","Linter":"revive","Code":"func Connect() (*sql.DB, error) {"},{"Title":"exported: exported function EnsureSchema should have comment or be unexported","Pos":"internal/db/db.go:37:1","Linter":"revive","Code":"func EnsureSchema(ctx context.Context, conn *sql.DB) error {"},{"Title":"package-comments: should have a package comment","Pos":"internal/handler/handler.go:1:1","Linter":"revive","Code":"package handler"},{"Title":"exported: exported type Handler should have comment or be unexported","Pos":"internal/handler/handler.go:14:6","Linter":"revive","Code":"type Handler struct {"},{"Title":"exported: exported function NewHandler should have comment or be unexported","Pos":"internal/handler/handler.go:18:1","Linter":"revive","Code":"func NewHandler(items *service.ItemService) Handler {"},{"Title":"exported: exported method Handler.ListItems should have comment or be unexported","Pos":"internal/handler/handler.go:22:1","Linter":"revive","Code":"func (h Handler) ListItems(c *gin.Context) {"},{"Title":"exported: exported method Handler.CreateItem should have comment or be unexported","Pos":"internal/handler/handler.go:31:1","Linter":"revive","Code":"func (h Handler) CreateItem(c *gin.Context) {"},{"Title":"package-comments: should have a package comment","Pos":"internal/repository/item.go:1:1","Linter":"revive","Code":"package repository"},{"Title":"exported: exported type ItemRepository should have comment or be unexported","Pos":"internal/repository/item.go:12:6","Linter":"revive","Code":"type ItemRepository interface {"},{"Title":"exported: exported function NewItemRepository should have comment or be unexported","Pos":"internal/repository/item.go:21:1","Linter":"revive","Code":"func NewItemRepository(db *sql.DB) ItemRepository {"},{"Title":"exported: exported type Web should have comment or be unexported","Pos":"internal/web/web.go:17:6","Linter":"revive","Code":"type Web struct {"},{"Title":"exported: exported function New should have comment or be unexported","Pos":"internal/web/web.go:23:1","Linter":"revive","Code":"func New(appName string, items *service.ItemService) (*Web, error) {"},{"Title":"exported: exported method Web.Mux should have comment or be unexported","Pos":"internal/web/web.go:35:1","Linter":"revive","Code":"func (w *Web) Mux() *http.ServeMux {"},{"Title":"exported: exported function Static should have comment or be unexported","Pos":"internal/web/web.go:43:1","Linter":"revive","Code":"func Static() http.Handler {"},{"Title":"unused-parameter: parameter 'r' seems to be unused, consider removing or renaming it as _","Pos":"internal/web/web.go:55:44","Linter":"revive","Code":"func (w *Web) home(wr http.ResponseWriter, r *http.Request) {"}]};
+</script>
+<script type="text/babel">
+  class Highlight extends React.Component {
+    componentDidMount() {
+      hljs.highlightElement(ReactDOM.findDOMNode(this));
+    }
+
+    render() {
+      return <pre className="go"><code>{this.props.code}</code></pre>;
+    }
+  }
+
+  class Issue extends React.Component {
+    render() {
+      return (
+        <div className="issue box">
+          <div>
+            <div className="columns">
+              <div className="column is-four-fifths">
+                <h5 className="title is-5 has-text-danger-dark">{this.props.data.Title}</h5>
+              </div>
+              <div className="column is-one-fifth">
+                <h6 className="title is-6">{this.props.data.Linter}</h6>
+              </div>
+            </div>
+            <strong>{this.props.data.Pos}</strong>
+          </div>
+          <div className="highlight">
+            <Highlight code={this.props.data.Code}/>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  class Issues extends React.Component {
+    render() {
+      if (!this.props.data.Issues || this.props.data.Issues.length === 0) {
+        return (
+          <div>
+            <div className="notification">
+              No issues found!
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="issues">
+          {this.props.data.Issues.map(issue => (<Issue data={issue}/>))}
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(
+    <div className="content">
+      <div className="columns is-centered">
+        <div className="column is-three-quarters">
+          <Issues data={data}/>
+        </div>
+      </div>
+    </div>,
+    document.getElementById("content")
+  );
+</script>
+</body>
+</html>

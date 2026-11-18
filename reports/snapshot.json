@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "generated": "18/11/2026 20:16",
+  "counts": [
+    0,
+    0,
+    20
+  ],
+  "items": [
+    {
+      "fp": "d73b851043df28b009e320d02fabd30a",
+      "n": 1,
+      "file": "cmd/api/main.go",
+      "rule": "exitAfterDefer",
+      "msg": "log.Fatalf will exit, and `defer cancel()` will not run",
+      "cat": 2
+    },
+    {
+      "fp": "8b4e3db4bb8cf2c942ffdde62986fd8a",
+      "n": 1,
+      "file": "internal/config/config.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "dd7ee0f0498a556018f95b2d442c4789",
+      "n": 1,
+      "file": "internal/config/config.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "52392ed0046c2bc6406793e9933ccc90",
+      "n": 1,
+      "file": "internal/db/db.go",
+      "rule": "package-comments",
+      "msg": "Pacote sem comentário de documentação no formato esperado.",
+      "cat": 2
+    },
+    {
+      "fp": "b25c8a0653decd607b206b49d91fd928",
+      "n": 1,
+      "file": "internal/db/db.go",
+      "rule": "blank-imports",
+      "msg": "a blank import should be only in a main or test package, or have a comment justifying it",
+      "cat": 2
+    },
+    {
+      "fp": "043c74e99138e659c1f41f1650cdd49a",
+      "n": 1,
+      "file": "internal/db/db.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "d7c368658777c7ed7057e9d66afc4961",
+      "n": 1,
+      "file": "internal/db/db.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "e29a2e60afebd143e8ecf67aff72cdb4",
+      "n": 1,
+      "file": "internal/handler/handler.go",
+      "rule": "package-comments",
+      "msg": "Pacote sem comentário de documentação no formato esperado.",
+      "cat": 2
+    },
+    {
+      "fp": "649b54d09e52ffd3ed6071cdb216b595",
+      "n": 1,
+      "file": "internal/handler/handler.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "3f8076e4d56b940d638f75cb15217271",
+      "n": 1,
+      "file": "internal/handler/handler.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "ee8dac3ae2eb8d13f2ee71cbf36a39eb",
+      "n": 1,
+      "file": "internal/handler/handler.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "b04af9633cdec34b591c5aab969505ef",
+      "n": 1,
+      "file": "internal/handler/handler.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "07069a1c92e6ad7db71159ac2a6a7027",
+      "n": 1,
+      "file": "internal/repository/item.go",
+      "rule": "package-comments",
+      "msg": "Pacote sem comentário de documentação no formato esperado.",
+      "cat": 2
+    },
+    {
+      "fp": "848fe8f5fc3f3fbdab1305517d703179",
+      "n": 1,
+      "file": "internal/repository/item.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "3f304c4dea4598ad8547e885ea8d3a77",
+      "n": 1,
+      "file": "internal/repository/item.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "03e1a2a7c8655fbd8e8aba8910e11926",
+      "n": 1,
+      "file": "internal/web/web.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "fd4ee2ad750b68a82949218c10ed7b02",
+      "n": 1,
+      "file": "internal/web/web.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "3a18c3b08ec1acb6a8f3054865ec7c19",
+      "n": 1,
+      "file": "internal/web/web.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "7d02273716e86c662e26e5e1d954e6b0",
+      "n": 1,
+      "file": "internal/web/web.go",
+      "rule": "exported",
+      "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "a8a755ea08371d3bbe7febd0e1a28a6b",
+      "n": 1,
+      "file": "internal/web/web.go",
+      "rule": "unused-parameter",
+      "msg": "Parâmetro nunca usado; renomeie para _ ou remova.",
+      "cat": 2
+    }
+  ]
+}

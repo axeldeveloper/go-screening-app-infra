@@ -1,0 +1,154 @@
+<testsuites>
+  <testsuite name="cmd/api/main.go" tests="1" errors="0" failures="1">
+    <testcase name="gocritic" classname="cmd/api/main.go:74:3">
+      <failure message="cmd/api/main.go:74:3: exitAfterDefer: log.Fatalf will exit, and `defer cancel()` will not run" type=""><![CDATA[: exitAfterDefer: log.Fatalf will exit, and `defer cancel()` will not run
+Category: gocritic
+File: cmd/api/main.go
+Line: 74
+Details: 		log.Fatalf("graceful shutdown failed: %v", err)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="internal/config/config.go" tests="2" errors="0" failures="2">
+    <testcase name="revive" classname="internal/config/config.go:5:6">
+      <failure message="internal/config/config.go:5:6: exported: exported type Config should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type Config should have comment or be unexported
+Category: revive
+File: internal/config/config.go
+Line: 5
+Details: type Config struct {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/config/config.go:10:1">
+      <failure message="internal/config/config.go:10:1: exported: exported function Load should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function Load should have comment or be unexported
+Category: revive
+File: internal/config/config.go
+Line: 10
+Details: func Load() Config {]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="internal/db/db.go" tests="4" errors="0" failures="4">
+    <testcase name="revive" classname="internal/db/db.go:1:1">
+      <failure message="internal/db/db.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
+Category: revive
+File: internal/db/db.go
+Line: 1
+Details: package db]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/db/db.go:10:2">
+      <failure message="internal/db/db.go:10:2: blank-imports: a blank import should be only in a main or test package, or have a comment justifying it" type="warning"><![CDATA[warning: blank-imports: a blank import should be only in a main or test package, or have a comment justifying it
+Category: revive
+File: internal/db/db.go
+Line: 10
+Details: 	_ "github.com/jackc/pgx/v5/stdlib"]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/db/db.go:20:1">
+      <failure message="internal/db/db.go:20:1: exported: exported function Connect should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function Connect should have comment or be unexported
+Category: revive
+File: internal/db/db.go
+Line: 20
+Details: func Connect() (*sql.DB, error) {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/db/db.go:37:1">
+      <failure message="internal/db/db.go:37:1: exported: exported function EnsureSchema should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function EnsureSchema should have comment or be unexported
+Category: revive
+File: internal/db/db.go
+Line: 37
+Details: func EnsureSchema(ctx context.Context, conn *sql.DB) error {]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="internal/handler/handler.go" tests="5" errors="0" failures="5">
+    <testcase name="revive" classname="internal/handler/handler.go:1:1">
+      <failure message="internal/handler/handler.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
+Category: revive
+File: internal/handler/handler.go
+Line: 1
+Details: package handler]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler.go:14:6">
+      <failure message="internal/handler/handler.go:14:6: exported: exported type Handler should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type Handler should have comment or be unexported
+Category: revive
+File: internal/handler/handler.go
+Line: 14
+Details: type Handler struct {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler.go:18:1">
+      <failure message="internal/handler/handler.go:18:1: exported: exported function NewHandler should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function NewHandler should have comment or be unexported
+Category: revive
+File: internal/handler/handler.go
+Line: 18
+Details: func NewHandler(items *service.ItemService) Handler {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler.go:22:1">
+      <failure message="internal/handler/handler.go:22:1: exported: exported method Handler.ListItems should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported method Handler.ListItems should have comment or be unexported
+Category: revive
+File: internal/handler/handler.go
+Line: 22
+Details: func (h Handler) ListItems(c *gin.Context) {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler.go:31:1">
+      <failure message="internal/handler/handler.go:31:1: exported: exported method Handler.CreateItem should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported method Handler.CreateItem should have comment or be unexported
+Category: revive
+File: internal/handler/handler.go
+Line: 31
+Details: func (h Handler) CreateItem(c *gin.Context) {]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="internal/repository/item.go" tests="3" errors="0" failures="3">
+    <testcase name="revive" classname="internal/repository/item.go:1:1">
+      <failure message="internal/repository/item.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
+Category: revive
+File: internal/repository/item.go
+Line: 1
+Details: package repository]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/repository/item.go:12:6">
+      <failure message="internal/repository/item.go:12:6: exported: exported type ItemRepository should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type ItemRepository should have comment or be unexported
+Category: revive
+File: internal/repository/item.go
+Line: 12
+Details: type ItemRepository interface {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/repository/item.go:21:1">
+      <failure message="internal/repository/item.go:21:1: exported: exported function NewItemRepository should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function NewItemRepository should have comment or be unexported
+Category: revive
+File: internal/repository/item.go
+Line: 21
+Details: func NewItemRepository(db *sql.DB) ItemRepository {]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="internal/web/web.go" tests="5" errors="0" failures="5">
+    <testcase name="revive" classname="internal/web/web.go:17:6">
+      <failure message="internal/web/web.go:17:6: exported: exported type Web should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type Web should have comment or be unexported
+Category: revive
+File: internal/web/web.go
+Line: 17
+Details: type Web struct {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/web/web.go:23:1">
+      <failure message="internal/web/web.go:23:1: exported: exported function New should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function New should have comment or be unexported
+Category: revive
+File: internal/web/web.go
+Line: 23
+Details: func New(appName string, items *service.ItemService) (*Web, error) {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/web/web.go:35:1">
+      <failure message="internal/web/web.go:35:1: exported: exported method Web.Mux should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported method Web.Mux should have comment or be unexported
+Category: revive
+File: internal/web/web.go
+Line: 35
+Details: func (w *Web) Mux() *http.ServeMux {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/web/web.go:43:1">
+      <failure message="internal/web/web.go:43:1: exported: exported function Static should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported function Static should have comment or be unexported
+Category: revive
+File: internal/web/web.go
+Line: 43
+Details: func Static() http.Handler {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/web/web.go:55:44">
+      <failure message="internal/web/web.go:55:44: unused-parameter: parameter &#39;r&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'r' seems to be unused, consider removing or renaming it as _
+Category: revive
+File: internal/web/web.go
+Line: 55
+Details: func (w *Web) home(wr http.ResponseWriter, r *http.Request) {]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,6 +1,17 @@
-# Em Azure Repos Git o gatilho de PR NÃO é o `pr:` do YAML.
-# Configure em: Repos > Branches > (branch) > Branch policies > Build validation,
-# apontando para este pipeline. Marque como "Required".
+# =====================================================================
+# Pipeline de qualidade (API Go)
+#
+# Gatilho de PR: em Azure Repos Git NÃO é o `pr:` do YAML. Configure em
+# Repos > Branches > (branch) > Branch policies > Build validation,
+# apontando para este pipeline, como "Required".
+#
+# Estágios:
+#   1) QualityGate  -> base determinística, BLOQUEIA o merge se falhar
+#   2) LLMReview    -> apenas complemento, NUNCA bloqueia o merge
+#
+# Builds em main/develop publicam o artefato "quality-reports", que serve
+# de base de comparação (itens novos x corrigidos) para os próximos PRs.
+# =====================================================================
 
 trigger:
   branches:
@@ -10,30 +21,90 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  COVER_MIN: 30   # ajuste após medir a cobertura atual (make cover)
+  - name: GO_VERSION
+    value: '1.25.0'              # alinhar com o .tool-versions
+  - name: GOLANGCI_LINT_VERSION
+    value: 'v2.15.0'             # alinhar com o .tool-versions e o Makefile
+  - name: COVER_MIN
+    value: '30'                  # ajustar após medir a cobertura (make cover)
+  - name: GOMODCACHE
+    value: $(Pipeline.Workspace)/.gomodcache
+  # Branch usada como base de comparação: destino do PR, ou a própria branch no CI
+  - name: BASE_BRANCH
+    value: $[ coalesce(variables['System.PullRequest.TargetBranch'], variables['Build.SourceBranch']) ]
 
 stages:
-# ------------------------------------------------------------------
+# ---------------------------------------------------------------------
 # 1) Base determinística — BLOQUEIA o merge se falhar
-# ------------------------------------------------------------------
+# ---------------------------------------------------------------------
 - stage: QualityGate
   displayName: Quality Gate (bloqueante)
   jobs:
   - job: gate
-    displayName: make gate
+    displayName: make gate + relatório
     steps:
     - checkout: self
-    - script: make gate
-      displayName: generate-check + golangci-lint (gosec) + govulncheck + cobertura
-      env:
-        COVER_MIN: $(COVER_MIN)
 
-# ------------------------------------------------------------------
+    - task: GoTool@0
+      displayName: Instalar Go $(GO_VERSION)
+      inputs:
+        version: $(GO_VERSION)
+
+    - task: Cache@2
+      displayName: Cache dos módulos Go
+      inputs:
+        key: 'go | "$(Agent.OS)" | "$(GO_VERSION)" | go.sum'
+        restoreKeys: |
+          go | "$(Agent.OS)" | "$(GO_VERSION)"
+        path: $(GOMODCACHE)
+
+    - script: |
+        mkdir -p "$HOME/go/bin"
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh \
+          | sh -s -- -b "$HOME/go/bin" "$(GOLANGCI_LINT_VERSION)"
+        echo "##vso[task.prependpath]$HOME/go/bin"
+        "$HOME/go/bin/golangci-lint" --version
+      displayName: Instalar golangci-lint
+
+    # Bloqueante: generate-check + golangci-lint (gosec) + govulncheck + cobertura
+    - script: make gate
+      displayName: make gate
+
+    # --- Relatório legível (roda mesmo se o gate falhar) ---
+    - task: DownloadPipelineArtifact@2
+      displayName: Base de comparação (última build de $(BASE_BRANCH))
+      condition: succeededOrFailed()
+      continueOnError: true
+      inputs:
+        buildType: specific
+        project: $(System.TeamProjectId)
+        definition: $(System.DefinitionId)
+        buildVersionToDownload: latestFromBranch
+        branchName: $(BASE_BRANCH)
+        artifactName: quality-reports
+        targetPath: $(Pipeline.Workspace)/baseline
+
+    # Para também reprovar por itens de manutenção NOVOS, acrescente em
+    # LINTREPORT_FLAGS: -max-new-smells 0
+    - script: >
+        make lint-report
+        LINTREPORT_FLAGS="-baseline $(Pipeline.Workspace)/baseline/snapshot.json"
+      displayName: Relatório de qualidade
+      condition: succeededOrFailed()
+
+    - task: PublishPipelineArtifact@1
+      displayName: Publicar relatórios (quality.html, summary.md, snapshot.json)
+      condition: succeededOrFailed()
+      inputs:
+        targetPath: reports
+        artifact: quality-reports
+
+# ---------------------------------------------------------------------
 # 2) LLM — apenas complemento, NUNCA bloqueia o merge
-# ------------------------------------------------------------------
+# ---------------------------------------------------------------------
 - stage: LLMReview
   displayName: Review com LLM (consultivo)
-  dependsOn: []
+  dependsOn: []                  # roda em paralelo, sem esperar o gate
   condition: eq(variables['Build.Reason'], 'PullRequest')
   jobs:
   - job: llm

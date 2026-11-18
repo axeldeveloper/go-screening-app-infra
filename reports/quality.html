@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatório de qualidade</title>
+<style>
+:root{--bg:#f4f6f9;--fg:#1b2433;--card:#fff;--mut:#667085;--line:#e3e7ee;--ok:#16794a;--bad:#c62828;--warn:#a85d00;--sec:#c62828;--bug:#d9480f;--smell:#2563c9;--new:#7c3aed;--chip:#eef1f6}
+@media (prefers-color-scheme:dark){:root{--bg:#0f141c;--fg:#e7eaf0;--card:#172030;--mut:#98a2b3;--line:#29344a;--ok:#3ecf8e;--bad:#ff6b6b;--warn:#f0b04a;--sec:#ff6b6b;--bug:#ff9a5c;--smell:#6ea8fe;--new:#b197fc;--chip:#1f2a3d}}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:22px;margin:0 0 2px}
+h2{font-size:16px;margin:30px 0 8px}
+.sub{color:var(--mut);font-size:13px}
+.verdict{display:inline-block;padding:4px 14px;border-radius:999px;color:#fff;font-weight:700;margin:12px 0;letter-spacing:.02em}
+.verdict.ok{background:var(--ok)}
+.verdict.bad{background:var(--bad)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--new);border-radius:8px;padding:10px 14px;margin:4px 0 14px;font-size:14px}
+.banner .n{color:var(--new);font-weight:700}
+.banner .f{color:var(--ok);font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card b{font-size:30px;display:block;line-height:1.2}
+.grade{float:right;font-weight:800;font-size:22px}
+.delta{font-size:12px;font-weight:700;margin-left:6px}
+.delta.good{color:var(--ok)}
+.delta.worse{color:var(--bad)}
+.delta.same{color:var(--mut)}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--card)}
+.wrap{border:1px solid var(--line);border-radius:10px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+tr:last-child td{border-bottom:0}
+th{color:var(--mut);font-weight:600;font-size:13px}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{margin:6px 0 0;padding:6px 8px;background:var(--chip);border-radius:6px;font:12.5px/1.4 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre}
+a{color:var(--smell)}
+.st-ok{color:var(--ok)}
+.st-bad{color:var(--bad);font-weight:700}
+.st-warn{color:var(--warn)}
+.b{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.b.sec{color:var(--sec);border-color:var(--sec)}
+.b.bug{color:var(--bug);border-color:var(--bug)}
+.b.smell{color:var(--smell);border-color:var(--smell)}
+.b.new{background:var(--new);border-color:var(--new);color:#fff;font-weight:700}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line);margin-top:26px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:8px}
+.chip{border:1px solid var(--line);background:var(--chip);color:var(--fg);padding:5px 12px;border-radius:999px;cursor:pointer;font:inherit;font-size:13px}
+.chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--mut)}
+.chip.sec::before{background:var(--sec)}
+.chip.bug::before{background:var(--bug)}
+.chip.smell::before{background:var(--smell)}
+.chip.off{opacity:.45;text-decoration:line-through}
+select,input[type=search]{font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+input[type=search]{flex:1;min-width:200px}
+.chk{font-size:14px;display:flex;gap:6px;align-items:center}
+.btn{font:inherit;font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg);cursor:pointer}
+details.grp,details.fixed{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+details>summary{cursor:pointer;padding:10px 12px;display:flex;gap:10px;align-items:center;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸";color:var(--mut)}
+details[open]>summary::before{content:"▾"}
+details[open]>summary{border-bottom:1px solid var(--line)}
+.gfile{flex:1;word-break:break-all}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.gcount{font-weight:700;background:var(--chip);border-radius:999px;padding:0 10px;min-width:28px;text-align:center}
+details .wrap{border:0;border-radius:0}
+td.loc{white-space:nowrap}
+tr.rrow{cursor:pointer}
+tr.rrow:hover td{background:var(--chip)}
+@media (max-width:600px){main{padding:16px 12px 40px}th:nth-child(2),td:nth-child(2){display:none}}
+</style></head><body><main>
+<h1>Relatório de qualidade</h1>
+<div class="sub">Gerado em 18/11/2026 20:16 · 20 item(ns) encontrado(s)</div>
+<div class="verdict ok">APROVADO</div>
+<div class="banner">Comparado com a execução de <b>18/11/2026 20:16</b>: <span class="n">1 novo(s)</span> · <span class="f">1 corrigido(s)</span></div>
+
+<div class="cards">
+<div class="card"><span class="grade">A</span><div class="sub">Segurança</div><b>0</b><span class="sub">limite: 0</span><span class="delta same">= igual</span></div>
+<div class="card"><span class="grade">A</span><div class="sub">Bugs</div><b>0</b><span class="sub">limite: 0</span><span class="delta same">= igual</span></div>
+<div class="card"><span class="grade">D</span><div class="sub">Manutenção</div><b>20</b><span class="sub">limite: sem limite</span><span class="delta same">= igual</span></div>
+</div>
+
+<h2>Quality gate</h2>
+<div class="wrap"><table>
+<tr><th>Condição</th><th>Atual</th><th>Limite</th><th>Status</th></tr>
+<tr><td>Segurança</td><td>0</td><td>0</td><td class="st-ok">ok</td></tr>
+<tr><td>Bugs</td><td>0</td><td>0</td><td class="st-ok">ok</td></tr>
+<tr><td>Manutenção</td><td>20</td><td>sem limite</td><td class="st-warn">aviso</td></tr>
+</table></div>
+
+
+<div class="bar">
+<div class="row">
+<button type="button" class="chip sec" data-cat="0">Segurança <b>0</b></button>
+<button type="button" class="chip bug" data-cat="1">Bugs <b>0</b></button>
+<button type="button" class="chip smell" data-cat="2">Manutenção <b>20</b></button>
+<select id="rule" aria-label="Filtrar por regra"><option value="">Todas as regras</option><option value="exported">exported (14)</option><option value="package-comments">package-comments (3)</option><option value="blank-imports">blank-imports (1)</option><option value="exitAfterDefer">exitAfterDefer (1)</option><option value="unused-parameter">unused-parameter (1)</option></select>
+<label class="chk"><input type="checkbox" id="onlynew"> só novos</label>
+<input id="q" type="search" placeholder="Buscar arquivo, regra ou texto…" aria-label="Buscar">
+</div>
+<div class="row2"><span class="sub">Mostrando <b id="shown">20</b> de 20</span>
+<span><button type="button" class="btn" id="expand">Expandir tudo</button> <button type="button" class="btn" id="collapse">Recolher tudo</button></span></div>
+</div>
+
+<details class="grp">
+<summary><code class="gfile">internal/handler/handler.go</code><span class="badges"><span class="b smell">5 manutenção</span></span><span class="gcount">5</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="package-comments" data-new="0" data-text="internal/handler/handler.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package handler manutenção">
+<td class="loc"><code>linha 1</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>package-comments</code></td>
+<td>Pacote sem comentário de documentação no formato esperado.<pre>package handler</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/handler/handler.go exported item público sem comentário de documentação. exported type handler should have comment or be unexported type handler struct { manutenção">
+<td class="loc"><code>linha 14</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>type Handler struct {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/handler/handler.go exported item público sem comentário de documentação. exported function newhandler should have comment or be unexported func newhandler(items *service.itemservice) handler { manutenção">
+<td class="loc"><code>linha 18</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func NewHandler(items *service.ItemService) Handler {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/handler/handler.go exported item público sem comentário de documentação. exported method handler.listitems should have comment or be unexported func (h handler) listitems(c *gin.context) { manutenção">
+<td class="loc"><code>linha 22</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func (h Handler) ListItems(c *gin.Context) {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/handler/handler.go exported item público sem comentário de documentação. exported method handler.createitem should have comment or be unexported func (h handler) createitem(c *gin.context) { manutenção">
+<td class="loc"><code>linha 31</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func (h Handler) CreateItem(c *gin.Context) {</pre></td></tr>
+</table></div></details>
+<details class="grp">
+<summary><code class="gfile">internal/web/web.go</code><span class="badges"><span class="b smell">5 manutenção</span></span><span class="gcount">5</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/web/web.go exported item público sem comentário de documentação. exported type web should have comment or be unexported type web struct { manutenção">
+<td class="loc"><code>linha 17</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>type Web struct {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/web/web.go exported item público sem comentário de documentação. exported function new should have comment or be unexported func new(appname string, items *service.itemservice) (*web, error) { manutenção">
+<td class="loc"><code>linha 23</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func New(appName string, items *service.ItemService) (*Web, error) {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/web/web.go exported item público sem comentário de documentação. exported method web.mux should have comment or be unexported func (w *web) mux() *http.servemux { manutenção">
+<td class="loc"><code>linha 35</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func (w *Web) Mux() *http.ServeMux {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/web/web.go exported item público sem comentário de documentação. exported function static should have comment or be unexported func static() http.handler { manutenção">
+<td class="loc"><code>linha 43</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func Static() http.Handler {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/web/web.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;r&#39; seems to be unused, consider removing or renaming it as _ func (w *web) home(wr http.responsewriter, r *http.request) { manutenção">
+<td class="loc"><code>linha 55</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (w *Web) home(wr http.ResponseWriter, r *http.Request) {</pre></td></tr>
+</table></div></details>
+<details class="grp" open>
+<summary><code class="gfile">internal/db/db.go</code><span class="badges"><span class="b smell">4 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">4</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="package-comments" data-new="1" data-text="internal/db/db.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package db manutenção">
+<td class="loc"><code>linha 1</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>package-comments</code></td>
+<td>Pacote sem comentário de documentação no formato esperado. <span class="b new">novo</span><pre>package db</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="blank-imports" data-new="0" data-text="internal/db/db.go blank-imports a blank import should be only in a main or test package, or have a comment justifying it a blank import should be only in a main or test package, or have a comment justifying it _ &#34;github.com/jackc/pgx/v5/stdlib&#34; manutenção">
+<td class="loc"><code>linha 10</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>blank-imports</code></td>
+<td>a blank import should be only in a main or test package, or have a comment justifying it<pre>_ &#34;github.com/jackc/pgx/v5/stdlib&#34;</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/db/db.go exported item público sem comentário de documentação. exported function connect should have comment or be unexported func connect() (*sql.db, error) { manutenção">
+<td class="loc"><code>linha 20</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func Connect() (*sql.DB, error) {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/db/db.go exported item público sem comentário de documentação. exported function ensureschema should have comment or be unexported func ensureschema(ctx context.context, conn *sql.db) error { manutenção">
+<td class="loc"><code>linha 37</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func EnsureSchema(ctx context.Context, conn *sql.DB) error {</pre></td></tr>
+</table></div></details>
+<details class="grp">
+<summary><code class="gfile">internal/repository/item.go</code><span class="badges"><span class="b smell">3 manutenção</span></span><span class="gcount">3</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="package-comments" data-new="0" data-text="internal/repository/item.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package repository manutenção">
+<td class="loc"><code>linha 1</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>package-comments</code></td>
+<td>Pacote sem comentário de documentação no formato esperado.<pre>package repository</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/repository/item.go exported item público sem comentário de documentação. exported type itemrepository should have comment or be unexported type itemrepository interface { manutenção">
+<td class="loc"><code>linha 12</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>type ItemRepository interface {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/repository/item.go exported item público sem comentário de documentação. exported function newitemrepository should have comment or be unexported func newitemrepository(db *sql.db) itemrepository { manutenção">
+<td class="loc"><code>linha 21</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func NewItemRepository(db *sql.DB) ItemRepository {</pre></td></tr>
+</table></div></details>
+<details class="grp">
+<summary><code class="gfile">internal/config/config.go</code><span class="badges"><span class="b smell">2 manutenção</span></span><span class="gcount">2</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/config/config.go exported item público sem comentário de documentação. exported type config should have comment or be unexported type config struct { manutenção">
+<td class="loc"><code>linha 5</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>type Config struct {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/config/config.go exported item público sem comentário de documentação. exported function load should have comment or be unexported func load() config { manutenção">
+<td class="loc"><code>linha 10</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func Load() Config {</pre></td></tr>
+</table></div></details>
+<details class="grp">
+<summary><code class="gfile">cmd/api/main.go</code><span class="badges"><span class="b smell">1 manutenção</span></span><span class="gcount">1</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="exitAfterDefer" data-new="0" data-text="cmd/api/main.go exitafterdefer log.fatalf will exit, and `defer cancel()` will not run log.fatalf will exit, and `defer cancel()` will not run log.fatalf(&#34;graceful shutdown failed: %v&#34;, err) manutenção">
+<td class="loc"><code>linha 74</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exitAfterDefer</code></td>
+<td>log.Fatalf will exit, and `defer cancel()` will not run<pre>log.Fatalf(&#34;graceful shutdown failed: %v&#34;, err)</pre></td></tr>
+</table></div></details>
+
+
+<details class="fixed"><summary><span class="gfile">Corrigidos desde a última execução</span><span class="gcount">1</span></summary>
+<div class="wrap"><table>
+<tr><td>Manutenção</td><td><code>internal/config/config.go</code></td><td><code>package-comments</code></td><td>Pacote sem comentário de documentação no formato esperado.</td></tr>
+</table></div></details>
+
+<h2>Regras mais frequentes <span class="sub">(clique para filtrar)</span></h2>
+<div class="wrap"><table>
+<tr><th>Qtd</th><th>Categoria</th><th>Regra</th><th>O que significa</th></tr>
+<tr class="rrow" data-rule="exported"><td>14</td><td>Manutenção</td><td><code>exported</code></td><td>Item público sem comentário de documentação.</td></tr>
+<tr class="rrow" data-rule="package-comments"><td>3</td><td>Manutenção</td><td><code>package-comments</code></td><td>Pacote sem comentário de documentação no formato esperado.</td></tr>
+<tr class="rrow" data-rule="blank-imports"><td>1</td><td>Manutenção</td><td><code>blank-imports</code></td><td>a blank import should be only in a main or test package, or have a comment justifying it</td></tr>
+<tr class="rrow" data-rule="exitAfterDefer"><td>1</td><td>Manutenção</td><td><code>exitAfterDefer</code></td><td>log.Fatalf will exit, and `defer cancel()` will not run</td></tr>
+<tr class="rrow" data-rule="unused-parameter"><td>1</td><td>Manutenção</td><td><code>unused-parameter</code></td><td>Parâmetro nunca usado; renomeie para _ ou remova.</td></tr>
+</table></div>
+
+</main>
+<script>
+(function () {
+  var catOn = {'0': true, '1': true, '2': true};
+  var rows = [].slice.call(document.querySelectorAll('tr.item'));
+  var groups = [].slice.call(document.querySelectorAll('details.grp'));
+  var q = document.getElementById('q');
+  var rs = document.getElementById('rule');
+  var onlyNew = document.getElementById('onlynew');
+  var shown = document.getElementById('shown');
+  if (!q || !rs || !shown) { return; }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var rule = rs.value;
+    var nOnly = onlyNew ? onlyNew.checked : false;
+    var total = 0;
+    rows.forEach(function (r) {
+      var ok = catOn[r.dataset.cat] &&
+        (rule === '' || r.dataset.rule === rule) &&
+        (!nOnly || r.dataset.new === '1') &&
+        (term === '' || r.dataset.text.indexOf(term) !== -1);
+      r.hidden = !ok;
+      if (ok) { total++; }
+    });
+    groups.forEach(function (g) {
+      var n = g.querySelectorAll('tr.item:not([hidden])').length;
+      g.hidden = (n === 0);
+      var c = g.querySelector('.gcount');
+      if (c) { c.textContent = n; }
+    });
+    shown.textContent = total;
+  }
+
+  [].slice.call(document.querySelectorAll('.chip')).forEach(function (c) {
+    c.addEventListener('click', function () {
+      var off = c.classList.toggle('off');
+      catOn[c.dataset.cat] = !off;
+      apply();
+    });
+  });
+  [].slice.call(document.querySelectorAll('tr.rrow')).forEach(function (r) {
+    r.addEventListener('click', function () {
+      rs.value = r.dataset.rule;
+      apply();
+      rs.scrollIntoView({behavior: 'smooth', block: 'center'});
+    });
+  });
+  q.addEventListener('input', apply);
+  rs.addEventListener('change', apply);
+  if (onlyNew) { onlyNew.addEventListener('change', apply); }
+  document.getElementById('expand').addEventListener('click', function () {
+    groups.forEach(function (g) { g.open = true; });
+  });
+  document.getElementById('collapse').addEventListener('click', function () {
+    groups.forEach(function (g) { g.open = false; });
+  });
+})();
+</script>
+</body></html>
