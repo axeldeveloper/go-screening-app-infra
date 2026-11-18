@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"my_tristack_app/internal/service"
+	"my_screening_app/internal/service"
 )
 
 const maxBodyBytes = 1 << 20

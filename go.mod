@@ -1,4 +1,4 @@
-module my_tristack_app
+module my_screening_app
 
 go 1.22.0
 

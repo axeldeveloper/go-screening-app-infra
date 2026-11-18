@@ -1,6 +1,9 @@
-# my-tristack-app
+# my-screening-app
+
+Project for the maintenance of users and service providers, audits, and monitoring
 
 A Go project scaffolded with [TriStack](https://tristack.space).
+
 
 ## Stack
 
@@ -23,7 +26,7 @@ go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.27.0 generate
 
 # 3. Run database migrations
 
-go run -tags postgres github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.1 -path db/migrations -database 'postgres://postgres:postgres@localhost:5432/my_tristack_app?sslmode=disable' up
+go run -tags postgres github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.1 -path db/migrations -database 'postgres://postgres:pg766312@localhost:5432/my_screening_app?sslmode=disable' up
 
 # 4. Start the dev server
 
@@ -36,7 +39,7 @@ go run ./cmd/api
 go test ./...                          # run all tests
 go vet ./...                           # static analysis
 gofmt -l .                             # check formatting
-go build -o ./bin/my_tristack_app ./cmd/api  # compile the binary
+go build -o ./bin/my_screening_app ./cmd/api  # compile the binary
 go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.27.0 generate  # regenerate query code
 ```
 

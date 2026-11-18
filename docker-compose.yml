@@ -4,7 +4,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/my_tristack_app?sslmode=disable
+      DATABASE_URL: postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable
     restart: on-failure
     depends_on:
       db:
@@ -14,17 +14,17 @@ services:
 
   migrate:
     build: .
-    entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:postgres@db:5432/my_tristack_app?sslmode=disable", "up"]
+    entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable", "up"]
     restart: on-failure
     depends_on:
       - db
 
   db:
-    image: postgres:16
+    image: postgres:17-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: my_tristack_app
+      POSTGRES_PASSWORD: pg766312
+      POSTGRES_DB: my_screening_app
     ports:
       - "5432:5432"
     volumes:

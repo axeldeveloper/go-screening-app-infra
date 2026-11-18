@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"my_tristack_app/internal/model"
-	"my_tristack_app/internal/repository"
+	"my_screening_app/internal/model"
+	"my_screening_app/internal/repository"
 )
 
 var ErrInvalidInput = errors.New("invalid input")

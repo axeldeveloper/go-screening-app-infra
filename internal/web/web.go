@@ -7,8 +7,8 @@ import (
 	"io/fs"
 	"net/http"
 
-	"my_tristack_app/internal/model"
-	"my_tristack_app/internal/service"
+	"my_screening_app/internal/model"
+	"my_screening_app/internal/service"
 )
 
 //go:embed templates static

@@ -12,12 +12,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"my_tristack_app/internal/config"
-	"my_tristack_app/internal/db"
-	"my_tristack_app/internal/handler"
-	"my_tristack_app/internal/repository"
-	"my_tristack_app/internal/service"
-	"my_tristack_app/internal/web"
+	"my_screening_app/internal/config"
+	"my_screening_app/internal/db"
+	"my_screening_app/internal/handler"
+	"my_screening_app/internal/repository"
+	"my_screening_app/internal/service"
+	"my_screening_app/internal/web"
 )
 
 func main() {

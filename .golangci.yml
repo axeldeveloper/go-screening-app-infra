@@ -2,11 +2,34 @@ version: "2"
 
 run:
   timeout: 5m
-  tests: true
 
 linters:
-  default: standard
+  default: none # standard
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - ineffassign
+    - unused
+    - gosec          # segurança
+    - revive         # code style
+    - gocritic
+    - errorlint
+    - bodyclose
+    - sqlclosecheck
+  settings:
+    gosec:
+      severity: medium
+      confidence: medium
+  exclusions:
+    generated: lax
+    paths:
+      - internal/db/sqlc   # código gerado pelo sqlc
+    rules:
+      - path: _test\.go
+        linters: [gosec, errcheck]
 
 formatters:
   enable:
     - gofmt
+    - goimports

@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"my_tristack_app/internal/db/sqlc"
-	"my_tristack_app/internal/model"
+	"my_screening_app/internal/db/sqlc"
+	"my_screening_app/internal/model"
 )
 
 type ItemRepository interface {

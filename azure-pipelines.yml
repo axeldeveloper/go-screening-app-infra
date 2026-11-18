@@ -1,0 +1,50 @@
+# Em Azure Repos Git o gatilho de PR NÃO é o `pr:` do YAML.
+# Configure em: Repos > Branches > (branch) > Branch policies > Build validation,
+# apontando para este pipeline. Marque como "Required".
+
+trigger:
+  branches:
+    include: [main, develop]
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  COVER_MIN: 30   # ajuste após medir a cobertura atual (make cover)
+
+stages:
+# ------------------------------------------------------------------
+# 1) Base determinística — BLOQUEIA o merge se falhar
+# ------------------------------------------------------------------
+- stage: QualityGate
+  displayName: Quality Gate (bloqueante)
+  jobs:
+  - job: gate
+    displayName: make gate
+    steps:
+    - checkout: self
+    - script: make gate
+      displayName: generate-check + golangci-lint (gosec) + govulncheck + cobertura
+      env:
+        COVER_MIN: $(COVER_MIN)
+
+# ------------------------------------------------------------------
+# 2) LLM — apenas complemento, NUNCA bloqueia o merge
+# ------------------------------------------------------------------
+- stage: LLMReview
+  displayName: Review com LLM (consultivo)
+  dependsOn: []
+  condition: eq(variables['Build.Reason'], 'PullRequest')
+  jobs:
+  - job: llm
+    displayName: llm-review
+    continueOnError: true
+    timeoutInMinutes: 5
+    steps:
+    - checkout: self
+    - script: bash ./scripts/llm-review.sh
+      displayName: Review LLM (fail-open)
+      continueOnError: true
+      env:
+        LLM_API_KEY: $(LLM_API_KEY)
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
