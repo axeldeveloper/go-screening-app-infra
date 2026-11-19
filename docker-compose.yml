@@ -5,49 +5,55 @@ services:
   #   ports:
   #     - "8000:8000"
   #   environment:
-  #     DATABASE_URL: postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable
-  #     # export MIGRATE_URL='postgres://postgres:pg766312@localhost:5432/my_screening_app?sslmode=disable'
+  #     DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/my_screening_app?sslmode=disable
   #   restart: on-failure
   #   depends_on:
   #     db:
-  #       condition: service_started
+  #       condition: service_healthy
   #     migrate:
   #       condition: service_completed_successfully
 
   # migrate:
   #   build: .
-  #   entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable", "up"]
+  #   entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:${POSTGRES_PASSWORD}@db:5432/my_screening_app?sslmode=disable", "up"]
   #   restart: on-failure
   #   depends_on:
-  #     - db
+  #     db:
+  #       condition: service_healthy
 
   db:
     image: postgres:17-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pg766312
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no .env}
       POSTGRES_DB: my_screening_app
+      # Usada apenas pelo script db/init/01-sonarqube.sh no primeiro start.
+      SONAR_DB_PASSWORD: ${SONAR_DB_PASSWORD:?Defina SONAR_DB_PASSWORD no .env}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      # -h 127.0.0.1 evita passar durante o servidor temporário de init.
+      test: ["CMD-SHELL", "pg_isready -U postgres -d my_screening_app -h 127.0.0.1"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 20
+      start_period: 10s
     networks:
       - sonarnet
 
   sonarqube:
-    image: sonarqube:community
+    image: sonarqube:26.11.0.134175-community
     ports:
       - "9001:9001"
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/my_sonar_app
-      - SONAR_JDBC_USERNAME=postgres
-      - SONAR_JDBC_PASSWORD=pg766312
+      # Banco dedicado: não reutiliza o banco da aplicação.
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonarqube
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=${SONAR_DB_PASSWORD:?Defina SONAR_DB_PASSWORD no .env}
       - SONAR_WEB_PORT=9001
       - SONAR_SEARCH_PORT=9002
     volumes:
@@ -57,22 +63,28 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9001/api/system/status | grep -q '\"status\":\"UP\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
     networks:
       - sonarnet
 
-  # Serviço sob demanda para rodar a análise do seu código Go
+  # Serviço sob demanda para rodar a análise do código Go.
   sonar-scanner:
-    image: sonarsource/sonar-scanner-cli:latest
-    container_name: sonar-scanner
+    image: sonarsource/sonar-scanner-cli:12.4.0.4321_8.4.0
     profiles:
       - tools # Impede que o scanner rode sozinho no "docker compose up"
     environment:
       - SONAR_HOST_URL=http://sonarqube:9001
-      - SONAR_TOKEN=${SONAR_TOKEN}
+      - SONAR_TOKEN=${SONAR_TOKEN:-}
     volumes:
       - .:/usr/src
     depends_on:
-      - sonarqube
+      sonarqube:
+        condition: service_healthy
     networks:
       - sonarnet
 

@@ -11,10 +11,14 @@ import (
 )
 
 func databaseURL() string {
-	if dsn := os.Getenv("DATABASE_URL"); dsn != "" {
-		return dsn
+	dsn := os.Getenv("DATABASE_URL")
+	fmt.Println("DATABASE_URL:", dsn)
+	if dsn == "" {
+		// DATABASE_URL deve ser definido via ambiente (veja .env.example).
+		// Nenhuma credencial é escrita em código-fonte.
+		return "postgres://postgres:pg766312@localhost:5433/my_screening_app"
 	}
-	return "postgres://postgres:pg766312@localhost:5432/my_screening_app"
+	return dsn
 }
 
 func Connect() (*sql.DB, error) {

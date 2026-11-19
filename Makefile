@@ -11,7 +11,7 @@ MIGRATE_TAGS := postgres
 MIGRATE_URL ?=
 
 .PHONY: build run test vet fmt generate generate-check lint vuln cover gate gate-docker \
-	lint-report quality-report check-migrate-url migrate-up migrate-down
+	lint-report quality-report sonar check-migrate-url migrate-up migrate-down
 
 build: generate
 	go build -o ./bin/my_screening_app ./cmd/api
@@ -73,14 +73,11 @@ lint-report:
 
 quality-report: lint-report
 
+# Sobe db+sonarqube (se necessário), espera o healthcheck e roda o scanner.
+# Requer .env com SONAR_TOKEN (e as senhas do banco) — ver .env.example.
 sonar:
 	go test ./... -coverprofile=coverage.out
-	docker run --rm \
-		--network="host" \
-		-v "$(shell pwd):/usr/src" \
-		sonarsource/sonar-scanner-cli \
-		-Dsonar.host.url=http://localhost:9001 \
-		-Dsonar.token=$(SONAR_TOKEN)
+	docker compose --profile tools run --rm -T sonar-scanner
 
 
 # ---------------------------------------------------------------

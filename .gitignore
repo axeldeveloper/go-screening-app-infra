@@ -14,6 +14,8 @@ tmp/
 *.db
 .env
 .env.local
+.scannerwork/
+.DS_Store
 .idea
 .vscode
 *.swp

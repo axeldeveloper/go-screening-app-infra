@@ -4,5 +4,7 @@ bin
 vendor
 .env
 .env*.local
+.scannerwork
+.DS_Store
 Dockerfile
 .dockerignore

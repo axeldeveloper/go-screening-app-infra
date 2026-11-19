@@ -8,6 +8,10 @@
 # Estágios:
 #   1) QualityGate  -> base determinística, BLOQUEIA o merge se falhar
 #   2) LLMReview    -> apenas complemento, NUNCA bloqueia o merge
+#   3) SonarAnalysis -> opcional; roda quando SONAR_HOST_URL está definido
+#
+# SonarQube: defina SONAR_HOST_URL (variável) e SONAR_TOKEN (secret) em
+# Pipelines > Edit > Variables. Sem SONAR_HOST_URL o estágio é ignorado.
 #
 # Builds em main/develop publicam o artefato "quality-reports", que serve
 # de base de comparação (itens novos x corrigidos) para os próximos PRs.
@@ -119,3 +123,41 @@ stages:
       env:
         LLM_API_KEY: $(LLM_API_KEY)
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# ---------------------------------------------------------------------
+# 3) SonarQube — opcional, roda em paralelo e respeita o quality gate
+# ---------------------------------------------------------------------
+- stage: SonarAnalysis
+  displayName: SonarQube (análise + quality gate)
+  dependsOn: []
+  condition: and(succeededOrFailed(), ne(variables['SONAR_HOST_URL'], ''))
+  jobs:
+  - job: sonar
+    displayName: sonar-scanner
+    timeoutInMinutes: 20
+    steps:
+    - checkout: self
+      fetchDepth: 0
+
+    - task: GoTool@0
+      displayName: Instalar Go $(GO_VERSION)
+      inputs:
+        version: $(GO_VERSION)
+
+    - script: go test ./... -coverprofile=coverage.out
+      displayName: Testes + cobertura
+
+    # O agente ubuntu-latest é amd64, mesma arquitetura da imagem do scanner.
+    - script: |
+        docker run --rm \
+          -v "$(Build.SourcesDirectory):/usr/src" \
+          -w /usr/src \
+          -e SONAR_HOST_URL \
+          -e SONAR_TOKEN \
+          sonarsource/sonar-scanner-cli:12.4.0.4321_8.4.0 \
+          -Dsonar.qualitygate.wait=true \
+          -Dsonar.projectVersion="$(Build.BuildNumber)"
+      displayName: sonar-scanner (quality gate bloqueante)
+      env:
+        SONAR_HOST_URL: $(SONAR_HOST_URL)
+        SONAR_TOKEN: $(SONAR_TOKEN)
