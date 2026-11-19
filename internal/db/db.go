@@ -14,7 +14,7 @@ func databaseURL() string {
 	if dsn := os.Getenv("DATABASE_URL"); dsn != "" {
 		return dsn
 	}
-	return "postgres://postgres:postgres@localhost:5432/my_tristack_app"
+	return "postgres://postgres:pg766312@localhost:5432/my_screening_app"
 }
 
 func Connect() (*sql.DB, error) {

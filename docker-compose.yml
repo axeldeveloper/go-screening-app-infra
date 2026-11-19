@@ -45,7 +45,7 @@ services:
       - "9001:9001"
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/my_screening_app
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/my_sonar_app
       - SONAR_JDBC_USERNAME=postgres
       - SONAR_JDBC_PASSWORD=pg766312
       - SONAR_WEB_PORT=9001
