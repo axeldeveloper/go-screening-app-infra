@@ -1,23 +1,25 @@
+name: my_screening_app
 services:
-  app:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      DATABASE_URL: postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable
-    restart: on-failure
-    depends_on:
-      db:
-        condition: service_started
-      migrate:
-        condition: service_completed_successfully
+  # app:
+  #   build: .
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     DATABASE_URL: postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable
+  #     # export MIGRATE_URL='postgres://postgres:pg766312@localhost:5432/my_screening_app?sslmode=disable'
+  #   restart: on-failure
+  #   depends_on:
+  #     db:
+  #       condition: service_started
+  #     migrate:
+  #       condition: service_completed_successfully
 
-  migrate:
-    build: .
-    entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable", "up"]
-    restart: on-failure
-    depends_on:
-      - db
+  # migrate:
+  #   build: .
+  #   entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:pg766312@db:5432/my_screening_app?sslmode=disable", "up"]
+  #   restart: on-failure
+  #   depends_on:
+  #     - db
 
   db:
     image: postgres:17-alpine
@@ -29,6 +31,58 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sonarnet
+
+  sonarqube:
+    image: sonarqube:community
+    ports:
+      - "9001:9001"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/my_screening_app
+      - SONAR_JDBC_USERNAME=postgres
+      - SONAR_JDBC_PASSWORD=pg766312
+      - SONAR_WEB_PORT=9001
+      - SONAR_SEARCH_PORT=9002
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sonarnet
+
+  # Serviço sob demanda para rodar a análise do seu código Go
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli:latest
+    container_name: sonar-scanner
+    profiles:
+      - tools # Impede que o scanner rode sozinho no "docker compose up"
+    environment:
+      - SONAR_HOST_URL=http://sonarqube:9001
+      - SONAR_TOKEN=${SONAR_TOKEN}
+    volumes:
+      - .:/usr/src
+    depends_on:
+      - sonarqube
+    networks:
+      - sonarnet
 
 volumes:
   pgdata:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+
+
+networks:
+  sonarnet:
+    driver: bridge

@@ -73,6 +73,16 @@ lint-report:
 
 quality-report: lint-report
 
+sonar:
+	go test ./... -coverprofile=coverage.out
+	docker run --rm \
+		--network="host" \
+		-v "$(shell pwd):/usr/src" \
+		sonarsource/sonar-scanner-cli \
+		-Dsonar.host.url=http://localhost:9001 \
+		-Dsonar.token=$(SONAR_TOKEN)
+
+
 # ---------------------------------------------------------------
 # Migrações
 # ---------------------------------------------------------------
