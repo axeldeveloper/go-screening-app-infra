@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "generated": "18/11/2026 20:16",
+  "generated": "19/11/2026 21:19",
   "counts": [
     0,
     0,
-    20
+    29
   ],
   "items": [
     {
@@ -13,6 +13,14 @@
       "file": "cmd/api/main.go",
       "rule": "exitAfterDefer",
       "msg": "log.Fatalf will exit, and `defer cancel()` will not run",
+      "cat": 2
+    },
+    {
+      "fp": "899c50fe54a8f8aab3159103f07f37a5",
+      "n": 1,
+      "file": "internal/config/config.go",
+      "rule": "package-comments",
+      "msg": "Pacote sem comentário de documentação no formato esperado.",
       "cat": 2
     },
     {
@@ -29,6 +37,14 @@
       "file": "internal/config/config.go",
       "rule": "exported",
       "msg": "Item público sem comentário de documentação.",
+      "cat": 2
+    },
+    {
+      "fp": "27fd4f0c145604d374e7805babfa227e",
+      "n": 1,
+      "file": "internal/config/config_test.go",
+      "rule": "gofmt",
+      "msg": "File is not properly formatted",
       "cat": 2
     },
     {
@@ -64,11 +80,11 @@
       "cat": 2
     },
     {
-      "fp": "e29a2e60afebd143e8ecf67aff72cdb4",
+      "fp": "8e3545001dc4192528c59e29d3db3e7f",
       "n": 1,
-      "file": "internal/handler/handler.go",
-      "rule": "package-comments",
-      "msg": "Pacote sem comentário de documentação no formato esperado.",
+      "file": "internal/db/db_test.go",
+      "rule": "gofmt",
+      "msg": "File is not properly formatted",
       "cat": 2
     },
     {
@@ -128,6 +144,38 @@
       "cat": 2
     },
     {
+      "fp": "7e6ad20d11a30567c51e983485cbf034",
+      "n": 1,
+      "file": "internal/service/item_service_test.go",
+      "rule": "gofmt",
+      "msg": "File is not properly formatted",
+      "cat": 2
+    },
+    {
+      "fp": "c36a747132ffcb88d3a7eae7242365de",
+      "n": 1,
+      "file": "internal/service/item_service_test.go",
+      "rule": "unused-parameter",
+      "msg": "Parâmetro nunca usado; renomeie para _ ou remova.",
+      "cat": 2
+    },
+    {
+      "fp": "9d935a3601f0ad418b6711551e616a2a",
+      "n": 1,
+      "file": "internal/service/item_service_test.go",
+      "rule": "unused-parameter",
+      "msg": "Parâmetro nunca usado; renomeie para _ ou remova.",
+      "cat": 2
+    },
+    {
+      "fp": "b8e6890010094efd4be89556c5a8724e",
+      "n": 3,
+      "file": "internal/service/item_service_test.go",
+      "rule": "unused-parameter",
+      "msg": "Parâmetro nunca usado; renomeie para _ ou remova.",
+      "cat": 2
+    },
+    {
       "fp": "03e1a2a7c8655fbd8e8aba8910e11926",
       "n": 1,
       "file": "internal/web/web.go",
@@ -163,6 +211,14 @@
       "fp": "a8a755ea08371d3bbe7febd0e1a28a6b",
       "n": 1,
       "file": "internal/web/web.go",
+      "rule": "unused-parameter",
+      "msg": "Parâmetro nunca usado; renomeie para _ ou remova.",
+      "cat": 2
+    },
+    {
+      "fp": "bb45091d9616a7bdc37181163e9571e3",
+      "n": 1,
+      "file": "internal/web/web_test.go",
       "rule": "unused-parameter",
       "msg": "Parâmetro nunca usado; renomeie para _ ou remova.",
       "cat": 2

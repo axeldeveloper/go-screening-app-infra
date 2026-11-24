@@ -5,17 +5,23 @@
     <error column="3" line="74" message="exitAfterDefer: log.Fatalf will exit, and `defer cancel()` will not run" severity="error" source="gocritic"></error>
   </file>
   <file name="internal/config/config.go">
+    <error column="1" line="1" message="package-comments: should have a package comment" severity="warning" source="revive"></error>
     <error column="6" line="5" message="exported: exported type Config should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="10" message="exported: exported function Load should have comment or be unexported" severity="warning" source="revive"></error>
+  </file>
+  <file name="internal/config/config_test.go">
+    <error column="1" line="10" message="File is not properly formatted" severity="error" source="gofmt"></error>
   </file>
   <file name="internal/db/db.go">
     <error column="1" line="1" message="package-comments: should have a package comment" severity="warning" source="revive"></error>
     <error column="2" line="10" message="blank-imports: a blank import should be only in a main or test package, or have a comment justifying it" severity="warning" source="revive"></error>
-    <error column="1" line="20" message="exported: exported function Connect should have comment or be unexported" severity="warning" source="revive"></error>
-    <error column="1" line="37" message="exported: exported function EnsureSchema should have comment or be unexported" severity="warning" source="revive"></error>
+    <error column="1" line="24" message="exported: exported function Connect should have comment or be unexported" severity="warning" source="revive"></error>
+    <error column="1" line="41" message="exported: exported function EnsureSchema should have comment or be unexported" severity="warning" source="revive"></error>
+  </file>
+  <file name="internal/db/db_test.go">
+    <error column="1" line="10" message="File is not properly formatted" severity="error" source="gofmt"></error>
   </file>
   <file name="internal/handler/handler.go">
-    <error column="1" line="1" message="package-comments: should have a package comment" severity="warning" source="revive"></error>
     <error column="6" line="14" message="exported: exported type Handler should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="18" message="exported: exported function NewHandler should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="22" message="exported: exported method Handler.ListItems should have comment or be unexported" severity="warning" source="revive"></error>
@@ -26,11 +32,22 @@
     <error column="6" line="12" message="exported: exported type ItemRepository should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="21" message="exported: exported function NewItemRepository should have comment or be unexported" severity="warning" source="revive"></error>
   </file>
+  <file name="internal/service/item_service_test.go">
+    <error column="1" line="45" message="File is not properly formatted" severity="error" source="gofmt"></error>
+    <error column="27" line="50" message="unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
+    <error column="25" line="58" message="unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
+    <error column="18" line="77" message="unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
+    <error column="18" line="86" message="unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
+    <error column="18" line="92" message="unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
+  </file>
   <file name="internal/web/web.go">
     <error column="6" line="17" message="exported: exported type Web should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="23" message="exported: exported function New should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="35" message="exported: exported method Web.Mux should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="1" line="43" message="exported: exported function Static should have comment or be unexported" severity="warning" source="revive"></error>
     <error column="44" line="55" message="unused-parameter: parameter &#39;r&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
+  </file>
+  <file name="internal/web/web_test.go">
+    <error column="40" line="24" message="unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" severity="warning" source="revive"></error>
   </file>
 </checkstyle>

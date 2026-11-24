@@ -73,9 +73,27 @@ lint-report:
 
 quality-report: lint-report
 
-# Sobe db+sonarqube (se necessário), espera o healthcheck e roda o scanner.
-# Requer .env com SONAR_TOKEN (e as senhas do banco) — ver .env.example.
-sonar:
+# ---------------------------------------------------------------
+# Servir o relatório de qualidade localmente
+# ---------------------------------------------------------------
+# Depois de rodar `make lint-report`, use:
+#   make reports-serve        # serve http://localhost:8080/reports/
+#   make reports-open         # abre no navegador (macOS)
+# ---------------------------------------------------------------
+REPORTS_PORT ?= 8080
+
+reports-serve: lint-report
+	@echo "Servindo relatorios em http://localhost:$(REPORTS_PORT)/quality.html"
+	@cd reports && python3 -m http.server $(REPORTS_PORT)
+
+reports-open: reports-serve
+	@open http://localhost:$(REPORTS_PORT)/quality.html 2>/dev/null || \
+		xdg-open http://localhost:$(REPORTS_PORT)/quality.html 2>/dev/null || \
+		echo "Abra manualmente: http://localhost:$(REPORTS_PORT)/quality.html"
+
+# ---------------------------------------------------------------
+# SonarQube + sonar-scanner
+# ---------------------------------------------------------------
 	go test ./... -coverprofile=coverage.out
 	docker compose --profile tools run --rm -T sonar-scanner
 
