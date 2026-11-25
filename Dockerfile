@@ -8,7 +8,7 @@ COPY go.mod go.sum* ./
 RUN go mod download
 
 COPY . .
-RUN go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.27.0 generate
+RUN apk add --no-cache gcc musl-dev && go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.27.0 generate
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/my_screening_app ./cmd/api
 RUN CGO_ENABLED=0 GOBIN=/out go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.1
 
