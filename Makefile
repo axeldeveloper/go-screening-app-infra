@@ -29,7 +29,7 @@ fmt:
 	gofmt -w .
 
 generate:
-	CGO_ENABLED=0 go run github.com/sqlc-dev/sqlc/cmd/sqlc@$(SQLC_VERSION) generate
+	go run github.com/sqlc-dev/sqlc/cmd/sqlc@$(SQLC_VERSION) generate
 
 # ---------------------------------------------------------------
 # Quality gate (determinístico) — o mesmo comando roda local e no CI
