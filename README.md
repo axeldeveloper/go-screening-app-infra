@@ -196,8 +196,33 @@ grep -E '\((revive|gosec|errcheck|staticcheck|gocritic|errorlint|govet)\)$' lint
 2026-11-25 11:01:17.548 | /usr/local/bin/docker-entrypoint.sh: /docker-entrypoint-initdb.d/01-sonarqube.sh: /bin/sh^M: bad interpreter: No such file or directory
 
 
+40.98 exit status 2
+------
+Dockerfile:11
+
+--------------------
+
+   9 |     
+
+  10 |     COPY . .
+
+  11 | >>> RUN CGO_ENABLED=0 go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.27.0 generate
+
+  12 |     RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/my_screening_app ./cmd/api
+
+  13 |     RUN CGO_ENABLED=0 GOBIN=/out go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.1
+
+--------------------
+
+target migrate: failed to solve: process "/bin/sh -c CGO_ENABLED=0 go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.27.0 generate" did not complete successfully: exit code: 1
 
 
+
+View build details: docker-desktop://dashboard/build/default/default/xkxx9rtw7f9pvbaokzk80i2n9
+
+
+
+sonar
 
 at org.sonar.db.DefaultDatabase.start(DefaultDatabase.java:127)
 
