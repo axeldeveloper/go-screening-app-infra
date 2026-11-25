@@ -1,25 +1,30 @@
 name: my_screening_app
 services:
-  # app:
-  #   build: .
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/my_screening_app?sslmode=disable
-  #   restart: on-failure
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #     migrate:
-  #       condition: service_completed_successfully
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/my_screening_app?sslmode=disable
+      PORT: 8000
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    networks:
+      - sonarnet
 
-  # migrate:
-  #   build: .
-  #   entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:${POSTGRES_PASSWORD}@db:5432/my_screening_app?sslmode=disable", "up"]
-  #   restart: on-failure
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
+  migrate:
+    build: .
+    entrypoint: ["/usr/local/bin/migrate", "-path", "/migrations", "-database", "postgres://postgres:${POSTGRES_PASSWORD}@db:5432/my_screening_app?sslmode=disable", "up"]
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sonarnet
 
   db:
     image: postgres:17-alpine
