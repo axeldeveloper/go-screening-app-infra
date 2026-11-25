@@ -172,23 +172,6 @@ grep -E '\((revive|gosec|errcheck|staticcheck|gocritic|errorlint|govet)\)$' lint
 
 
 2026-11-25 11:01:16.261 | The files belonging to this database system will be owned by user "postgres".
-2026-11-25 11:01:16.261 | This user must also own the server process.
-2026-11-25 11:01:16.261 | 
-2026-11-25 11:01:16.261 | The database cluster will be initialized with locale "en_US.utf8".
-2026-11-25 11:01:16.261 | The default database encoding has accordingly been set to "UTF8".
-2026-11-25 11:01:16.261 | The default text search configuration will be set to "english".
-2026-11-25 11:01:16.261 | 
-2026-11-25 11:01:16.261 | Data page checksums are disabled.
-2026-11-25 11:01:16.261 | 
-2026-11-25 11:01:16.261 | fixing permissions on existing directory /var/lib/postgresql/data ... ok
-2026-11-25 11:01:16.265 | creating subdirectories ... ok
-2026-11-25 11:01:16.265 | selecting dynamic shared memory implementation ... posix
-2026-11-25 11:01:16.323 | selecting default "max_connections" ... 100
-2026-11-25 11:01:16.357 | selecting default "shared_buffers" ... 128MB
-2026-11-25 11:01:16.508 | selecting default time zone ... UTC
-2026-11-25 11:01:16.510 | creating configuration files ... ok
-2026-11-25 11:01:16.673 | running bootstrap script ... ok
-2026-11-25 11:01:16.865 | sh: locale: not found
 2026-11-25 11:01:16.865 | 2026-11-25 14:01:16.865 UTC [35] WARNING:  no usable system locales were found
 2026-11-25 11:01:17.220 | performing post-bootstrap initialization ... ok
 2026-11-25 11:01:17.328 | syncing data to disk ... ok
@@ -211,6 +194,9 @@ grep -E '\((revive|gosec|errcheck|staticcheck|gocritic|errorlint|govet)\)$' lint
 2026-11-25 11:01:17.515 | 
 2026-11-25 11:01:17.516 | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/01-sonarqube.sh
 2026-11-25 11:01:17.548 | /usr/local/bin/docker-entrypoint.sh: /docker-entrypoint-initdb.d/01-sonarqube.sh: /bin/sh^M: bad interpreter: No such file or directory
+
+
+
 
 
 at org.sonar.db.DefaultDatabase.start(DefaultDatabase.java:127)
