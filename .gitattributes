@@ -3,7 +3,13 @@
 # Scripts de shell (sensíveis a CRLF no container Linux)
 db/init/*.sh text eol=lf
 
-# Docker
+# Docker e Compose
 docker-compose.yml text eol=lf
 Dockerfile text eol=lf
 .dockerignore text eol=lf
+
+# Makefile
+Makefile text eol=lf
+
+# Documentação
+*.md text eol=lf
