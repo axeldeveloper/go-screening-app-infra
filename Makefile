@@ -117,9 +117,10 @@ sonar-wait: sonar-up
 sonar-scan: sonar-wait
 	docker compose --profile tools run --rm -T sonar-scanner
 
-# Alvo principal: roda testes com coverage e dispara a análise no SonarQube
+# Alvo principal: roda testes com coverage dentro de container Docker
+# e dispara a análise no SonarQube (útil quando não tem Go instalado no host)
 sonar: sonar-wait
-	go test ./... -coverprofile=coverage.out
+	docker run --rm -v "$(shell pwd):/app" -w /app golang:1.25-alpine sh -c "apk add --no-cache git gcc musl-dev && CGO_ENABLED=1 go test ./... -coverprofile=coverage.out"
 	docker compose --profile tools run --rm -T sonar-scanner
 	@echo "=== Análise concluída ==="
 	@echo "Dashboard: $(SONAR_DASHBOARD)"
