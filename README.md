@@ -169,3 +169,56 @@ grep -oE '\([a-z]+\)$' lint.log | sort | uniq -c | sort -rn
 
 # lista dos achados
 grep -E '\((revive|gosec|errcheck|staticcheck|gocritic|errorlint|govet)\)$' lint.log
+
+
+2026-11-25 11:01:16.261 | The files belonging to this database system will be owned by user "postgres".
+2026-11-25 11:01:16.261 | This user must also own the server process.
+2026-11-25 11:01:16.261 | 
+2026-11-25 11:01:16.261 | The database cluster will be initialized with locale "en_US.utf8".
+2026-11-25 11:01:16.261 | The default database encoding has accordingly been set to "UTF8".
+2026-11-25 11:01:16.261 | The default text search configuration will be set to "english".
+2026-11-25 11:01:16.261 | 
+2026-11-25 11:01:16.261 | Data page checksums are disabled.
+2026-11-25 11:01:16.261 | 
+2026-11-25 11:01:16.261 | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-11-25 11:01:16.265 | creating subdirectories ... ok
+2026-11-25 11:01:16.265 | selecting dynamic shared memory implementation ... posix
+2026-11-25 11:01:16.323 | selecting default "max_connections" ... 100
+2026-11-25 11:01:16.357 | selecting default "shared_buffers" ... 128MB
+2026-11-25 11:01:16.508 | selecting default time zone ... UTC
+2026-11-25 11:01:16.510 | creating configuration files ... ok
+2026-11-25 11:01:16.673 | running bootstrap script ... ok
+2026-11-25 11:01:16.865 | sh: locale: not found
+2026-11-25 11:01:16.865 | 2026-11-25 14:01:16.865 UTC [35] WARNING:  no usable system locales were found
+2026-11-25 11:01:17.220 | performing post-bootstrap initialization ... ok
+2026-11-25 11:01:17.328 | syncing data to disk ... ok
+2026-11-25 11:01:17.328 | 
+2026-11-25 11:01:17.328 | 
+2026-11-25 11:01:17.328 | Success. You can now start the database server using:
+2026-11-25 11:01:17.328 | 
+2026-11-25 11:01:17.328 |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-11-25 11:01:17.328 | 
+2026-11-25 11:01:17.328 | initdb: warning: enabling "trust" authentication for local connections
+2026-11-25 11:01:17.328 | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-11-25 11:01:17.371 | waiting for server to start....2026-11-25 14:01:17.371 UTC [41] LOG:  starting PostgreSQL 17.12 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-11-25 11:01:17.374 | 2026-11-25 14:01:17.374 UTC [41] LOG:  listening on Unix socket "/run/postgresql/.s.PGSQL.5432"
+2026-11-25 11:01:17.382 | 2026-11-25 14:01:17.381 UTC [44] LOG:  database system was shut down at 2026-11-25 14:01:17 UTC
+2026-11-25 11:01:17.388 | 2026-11-25 14:01:17.387 UTC [41] LOG:  database system is ready to accept connections
+2026-11-25 11:01:17.450 |  done
+2026-11-25 11:01:17.451 | server started
+2026-11-25 11:01:17.512 | CREATE DATABASE
+2026-11-25 11:01:17.513 | 
+2026-11-25 11:01:17.515 | 
+2026-11-25 11:01:17.516 | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/01-sonarqube.sh
+2026-11-25 11:01:17.548 | /usr/local/bin/docker-entrypoint.sh: /docker-entrypoint-initdb.d/01-sonarqube.sh: /bin/sh^M: bad interpreter: No such file or directory
+
+
+at org.sonar.db.DefaultDatabase.start(DefaultDatabase.java:127)
+
+	... 50 common frames omitted
+
+Caused by: org.postgresql.util.PSQLException: FATAL: password authentication failed for user "sonar"
+
+	at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:837)
+
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:309)
