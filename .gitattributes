@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+# Scripts de shell (sensíveis a CRLF no container Linux)
+db/init/*.sh text eol=lf
+
+# Docker
+docker-compose.yml text eol=lf
+Dockerfile text eol=lf
+.dockerignore text eol=lf
