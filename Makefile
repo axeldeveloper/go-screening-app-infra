@@ -94,8 +94,41 @@ reports-open: reports-serve
 # ---------------------------------------------------------------
 # SonarQube + sonar-scanner
 # ---------------------------------------------------------------
+SONAR_URL ?= http://localhost:9001
+SONAR_DASHBOARD ?= http://localhost:9001/dashboard?id=my_screening_app
+
+# Sobe apenas banco de dados e SonarQube (scanner fica no profile tools)
+sonar-up:
+	docker compose up -d db sonarqube
+
+# Aguarda o SonarQube reportar status UP
+sonar-wait: sonar-up
+	@echo "Aguardando SonarQube ficar saudável em $(SONAR_URL)..."
+	@for i in $$(seq 1 60); do \
+		if curl -fsS "$(SONAR_URL)/api/system/status" | grep -q '"status":"UP"'; then \
+			echo "SonarQube está UP."; exit 0; \
+		fi; \
+		echo "Tentativa $$i/60 - aguardando..."; \
+		sleep 5; \
+	done; \
+	echo "SonarQube não ficou saudável a tempo."; exit 1;
+
+# Executa a análise de código no SonarQube (sob demanda)
+sonar-scan: sonar-wait
+	docker compose --profile tools run --rm -T sonar-scanner
+
+# Alvo principal: roda testes com coverage e dispara a análise no SonarQube
+sonar: sonar-wait
 	go test ./... -coverprofile=coverage.out
 	docker compose --profile tools run --rm -T sonar-scanner
+	@echo "=== Análise concluída ==="
+	@echo "Dashboard: $(SONAR_DASHBOARD)"
+
+# Abre o dashboard do SonarQube no navegador
+sonar-open:
+	@open "$(SONAR_DASHBOARD)" 2>/dev/null || \
+		xdg-open "$(SONAR_DASHBOARD)" 2>/dev/null || \
+		echo "Abra manualmente: $(SONAR_DASHBOARD)"
 
 
 # ---------------------------------------------------------------
