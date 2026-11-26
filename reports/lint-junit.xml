@@ -40,14 +40,7 @@ Line: 10
 Details: 		name      string]]></failure>
     </testcase>
   </testsuite>
-  <testsuite name="internal/db/db.go" tests="4" errors="0" failures="4">
-    <testcase name="revive" classname="internal/db/db.go:1:1">
-      <failure message="internal/db/db.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
-Category: revive
-File: internal/db/db.go
-Line: 1
-Details: package db]]></failure>
-    </testcase>
+  <testsuite name="internal/db/db.go" tests="3" errors="0" failures="3">
     <testcase name="revive" classname="internal/db/db.go:10:2">
       <failure message="internal/db/db.go:10:2: blank-imports: a blank import should be only in a main or test package, or have a comment justifying it" type="warning"><![CDATA[warning: blank-imports: a blank import should be only in a main or test package, or have a comment justifying it
 Category: revive
@@ -70,16 +63,14 @@ Line: 41
 Details: func EnsureSchema(ctx context.Context, conn *sql.DB) error {]]></failure>
     </testcase>
   </testsuite>
-  <testsuite name="internal/db/db_test.go" tests="1" errors="0" failures="1">
-    <testcase name="gofmt" classname="internal/db/db_test.go:10:1">
-      <failure message="internal/db/db_test.go:10:1: File is not properly formatted" type=""><![CDATA[: File is not properly formatted
-Category: gofmt
-File: internal/db/db_test.go
-Line: 10
-Details: 		name     string]]></failure>
+  <testsuite name="internal/handler/handler.go" tests="5" errors="0" failures="5">
+    <testcase name="revive" classname="internal/handler/handler.go:1:1">
+      <failure message="internal/handler/handler.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
+Category: revive
+File: internal/handler/handler.go
+Line: 1
+Details: package handler]]></failure>
     </testcase>
-  </testsuite>
-  <testsuite name="internal/handler/handler.go" tests="4" errors="0" failures="4">
     <testcase name="revive" classname="internal/handler/handler.go:14:6">
       <failure message="internal/handler/handler.go:14:6: exported: exported type Handler should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type Handler should have comment or be unexported
 Category: revive
@@ -109,14 +100,44 @@ Line: 31
 Details: func (h Handler) CreateItem(c *gin.Context) {]]></failure>
     </testcase>
   </testsuite>
-  <testsuite name="internal/repository/item.go" tests="3" errors="0" failures="3">
-    <testcase name="revive" classname="internal/repository/item.go:1:1">
-      <failure message="internal/repository/item.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
-Category: revive
-File: internal/repository/item.go
-Line: 1
-Details: package repository]]></failure>
+  <testsuite name="internal/handler/handler_test.go" tests="5" errors="0" failures="5">
+    <testcase name="gofmt" classname="internal/handler/handler_test.go:21:1">
+      <failure message="internal/handler/handler_test.go:21:1: File is not properly formatted" type=""><![CDATA[: File is not properly formatted
+Category: gofmt
+File: internal/handler/handler_test.go
+Line: 21
+Details: 	items      []model.Item]]></failure>
     </testcase>
+    <testcase name="revive" classname="internal/handler/handler_test.go:26:37">
+      <failure message="internal/handler/handler_test.go:26:37: unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'ctx' seems to be unused, consider removing or renaming it as _
+Category: revive
+File: internal/handler/handler_test.go
+Line: 26
+Details: func (m *mockItemRepository) Create(ctx context.Context, item *model.Item) error {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler_test.go:115:20">
+      <failure message="internal/handler/handler_test.go:115:20: unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'm' seems to be unused, consider removing or renaming it as _
+Category: revive
+File: internal/handler/handler_test.go
+Line: 115
+Details: 			setup:     func(m *mockItemRepository) {},]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler_test.go:122:20">
+      <failure message="internal/handler/handler_test.go:122:20: unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'm' seems to be unused, consider removing or renaming it as _
+Category: revive
+File: internal/handler/handler_test.go
+Line: 122
+Details: 			setup:     func(m *mockItemRepository) {},]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/handler/handler_test.go:129:20">
+      <failure message="internal/handler/handler_test.go:129:20: unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'm' seems to be unused, consider removing or renaming it as _
+Category: revive
+File: internal/handler/handler_test.go
+Line: 129
+Details: 			setup:     func(m *mockItemRepository) {},]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="internal/repository/item.go" tests="2" errors="0" failures="2">
     <testcase name="revive" classname="internal/repository/item.go:12:6">
       <failure message="internal/repository/item.go:12:6: exported: exported type ItemRepository should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type ItemRepository should have comment or be unexported
 Category: revive
@@ -132,51 +153,14 @@ Line: 21
 Details: func NewItemRepository(db *sql.DB) ItemRepository {]]></failure>
     </testcase>
   </testsuite>
-  <testsuite name="internal/service/item_service_test.go" tests="6" errors="0" failures="6">
-    <testcase name="gofmt" classname="internal/service/item_service_test.go:45:1">
-      <failure message="internal/service/item_service_test.go:45:1: File is not properly formatted" type=""><![CDATA[: File is not properly formatted
-Category: gofmt
-File: internal/service/item_service_test.go
-Line: 45
-Details: 	items   []model.Item]]></failure>
-    </testcase>
-    <testcase name="revive" classname="internal/service/item_service_test.go:50:27">
-      <failure message="internal/service/item_service_test.go:50:27: unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'ctx' seems to be unused, consider removing or renaming it as _
+  <testsuite name="internal/web/web.go" tests="6" errors="0" failures="6">
+    <testcase name="revive" classname="internal/web/web.go:1:1">
+      <failure message="internal/web/web.go:1:1: package-comments: should have a package comment" type="warning"><![CDATA[warning: package-comments: should have a package comment
 Category: revive
-File: internal/service/item_service_test.go
-Line: 50
-Details: func (m *mockRepo) Create(ctx context.Context, item *model.Item) error {]]></failure>
+File: internal/web/web.go
+Line: 1
+Details: package web]]></failure>
     </testcase>
-    <testcase name="revive" classname="internal/service/item_service_test.go:58:25">
-      <failure message="internal/service/item_service_test.go:58:25: unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'ctx' seems to be unused, consider removing or renaming it as _
-Category: revive
-File: internal/service/item_service_test.go
-Line: 58
-Details: func (m *mockRepo) List(ctx context.Context) ([]model.Item, error) {]]></failure>
-    </testcase>
-    <testcase name="revive" classname="internal/service/item_service_test.go:77:18">
-      <failure message="internal/service/item_service_test.go:77:18: unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'm' seems to be unused, consider removing or renaming it as _
-Category: revive
-File: internal/service/item_service_test.go
-Line: 77
-Details: 			setup:   func(m *mockRepo) {},]]></failure>
-    </testcase>
-    <testcase name="revive" classname="internal/service/item_service_test.go:86:18">
-      <failure message="internal/service/item_service_test.go:86:18: unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'm' seems to be unused, consider removing or renaming it as _
-Category: revive
-File: internal/service/item_service_test.go
-Line: 86
-Details: 			setup:   func(m *mockRepo) {},]]></failure>
-    </testcase>
-    <testcase name="revive" classname="internal/service/item_service_test.go:92:18">
-      <failure message="internal/service/item_service_test.go:92:18: unused-parameter: parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'm' seems to be unused, consider removing or renaming it as _
-Category: revive
-File: internal/service/item_service_test.go
-Line: 92
-Details: 			setup:   func(m *mockRepo) {},]]></failure>
-    </testcase>
-  </testsuite>
-  <testsuite name="internal/web/web.go" tests="5" errors="0" failures="5">
     <testcase name="revive" classname="internal/web/web.go:17:6">
       <failure message="internal/web/web.go:17:6: exported: exported type Web should have comment or be unexported" type="warning"><![CDATA[warning: exported: exported type Web should have comment or be unexported
 Category: revive
@@ -213,13 +197,27 @@ Line: 55
 Details: func (w *Web) home(wr http.ResponseWriter, r *http.Request) {]]></failure>
     </testcase>
   </testsuite>
-  <testsuite name="internal/web/web_test.go" tests="1" errors="0" failures="1">
+  <testsuite name="internal/web/web_test.go" tests="3" errors="0" failures="3">
+    <testcase name="gofmt" classname="internal/web/web_test.go:19:1">
+      <failure message="internal/web/web_test.go:19:1: File is not properly formatted" type=""><![CDATA[: File is not properly formatted
+Category: gofmt
+File: internal/web/web_test.go
+Line: 19
+Details: 	items   []model.Item]]></failure>
+    </testcase>
     <testcase name="revive" classname="internal/web/web_test.go:24:40">
       <failure message="internal/web/web_test.go:24:40: unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'ctx' seems to be unused, consider removing or renaming it as _
 Category: revive
 File: internal/web/web_test.go
 Line: 24
 Details: func (m *mockWebItemRepository) Create(ctx context.Context, item *model.Item) error {]]></failure>
+    </testcase>
+    <testcase name="revive" classname="internal/web/web_test.go:32:38">
+      <failure message="internal/web/web_test.go:32:38: unused-parameter: parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _" type="warning"><![CDATA[warning: unused-parameter: parameter 'ctx' seems to be unused, consider removing or renaming it as _
+Category: revive
+File: internal/web/web_test.go
+Line: 32
+Details: func (m *mockWebItemRepository) List(ctx context.Context) ([]model.Item, error) {]]></failure>
     </testcase>
   </testsuite>
 </testsuites>

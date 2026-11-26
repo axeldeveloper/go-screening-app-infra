@@ -72,9 +72,9 @@ tr.rrow:hover td{background:var(--chip)}
 @media (max-width:600px){main{padding:16px 12px 40px}th:nth-child(2),td:nth-child(2){display:none}}
 </style></head><body><main>
 <h1>Relatório de qualidade</h1>
-<div class="sub">Gerado em 19/11/2026 21:19 · 29 item(ns) encontrado(s)</div>
+<div class="sub">Gerado em 25/11/2026 14:51 · 29 item(ns) encontrado(s)</div>
 <div class="verdict ok">APROVADO</div>
-<div class="banner">Comparado com a execução de <b>19/11/2026 21:17</b>: <span class="n">3 novo(s)</span> · <span class="f">3 corrigido(s)</span></div>
+<div class="banner">Comparado com a execução de <b>25/11/2026 14:50</b>: <span class="n">3 novo(s)</span> · <span class="f">3 corrigido(s)</span></div>
 
 <div class="cards">
 <div class="card"><span class="grade">A</span><div class="sub">Segurança</div><b>0</b><span class="sub">limite: 0</span><span class="delta same">= igual</span></div>
@@ -104,43 +104,14 @@ tr.rrow:hover td{background:var(--chip)}
 <span><button type="button" class="btn" id="expand">Expandir tudo</button> <button type="button" class="btn" id="collapse">Recolher tudo</button></span></div>
 </div>
 
-<details class="grp" open>
-<summary><code class="gfile">internal/service/item_service_test.go</code><span class="badges"><span class="b smell">6 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">6</span></summary>
-<div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="gofmt" data-new="1" data-text="internal/service/item_service_test.go gofmt file is not properly formatted file is not properly formatted items   []model.item manutenção">
-<td class="loc"><code>linha 45</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>gofmt</code></td>
-<td>File is not properly formatted <span class="b new">novo</span><pre>items   []model.Item</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/service/item_service_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _ func (m *mockrepo) create(ctx context.context, item *model.item) error { manutenção">
-<td class="loc"><code>linha 50</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>unused-parameter</code></td>
-<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (m *mockRepo) Create(ctx context.Context, item *model.Item) error {</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/service/item_service_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _ func (m *mockrepo) list(ctx context.context) ([]model.item, error) { manutenção">
-<td class="loc"><code>linha 58</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>unused-parameter</code></td>
-<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (m *mockRepo) List(ctx context.Context) ([]model.Item, error) {</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/service/item_service_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _ setup:   func(m *mockrepo) {}, manutenção">
-<td class="loc"><code>linha 77</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>unused-parameter</code></td>
-<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>setup:   func(m *mockRepo) {},</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/service/item_service_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _ setup:   func(m *mockrepo) {}, manutenção">
-<td class="loc"><code>linha 86</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>unused-parameter</code></td>
-<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>setup:   func(m *mockRepo) {},</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/service/item_service_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _ setup:   func(m *mockrepo) {}, manutenção">
-<td class="loc"><code>linha 92</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>unused-parameter</code></td>
-<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>setup:   func(m *mockRepo) {},</pre></td></tr>
-</table></div></details>
 <details class="grp">
-<summary><code class="gfile">internal/web/web.go</code><span class="badges"><span class="b smell">5 manutenção</span></span><span class="gcount">5</span></summary>
+<summary><code class="gfile">internal/web/web.go</code><span class="badges"><span class="b smell">6 manutenção</span></span><span class="gcount">6</span></summary>
 <div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="package-comments" data-new="0" data-text="internal/web/web.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package web manutenção">
+<td class="loc"><code>linha 1</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>package-comments</code></td>
+<td>Pacote sem comentário de documentação no formato esperado.<pre>package web</pre></td></tr>
 <tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/web/web.go exported item público sem comentário de documentação. exported type web should have comment or be unexported type web struct { manutenção">
 <td class="loc"><code>linha 17</code></td>
 <td><span class="b smell">Manutenção</span></td>
@@ -168,32 +139,13 @@ tr.rrow:hover td{background:var(--chip)}
 <td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (w *Web) home(wr http.ResponseWriter, r *http.Request) {</pre></td></tr>
 </table></div></details>
 <details class="grp" open>
-<summary><code class="gfile">internal/db/db.go</code><span class="badges"><span class="b smell">4 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">4</span></summary>
+<summary><code class="gfile">internal/handler/handler.go</code><span class="badges"><span class="b smell">5 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">5</span></summary>
 <div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="package-comments" data-new="1" data-text="internal/db/db.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package db manutenção">
+<tr class="item" data-cat="2" data-rule="package-comments" data-new="1" data-text="internal/handler/handler.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package handler manutenção">
 <td class="loc"><code>linha 1</code></td>
 <td><span class="b smell">Manutenção</span></td>
 <td><code>package-comments</code></td>
-<td>Pacote sem comentário de documentação no formato esperado. <span class="b new">novo</span><pre>package db</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="blank-imports" data-new="0" data-text="internal/db/db.go blank-imports a blank import should be only in a main or test package, or have a comment justifying it a blank import should be only in a main or test package, or have a comment justifying it _ &#34;github.com/jackc/pgx/v5/stdlib&#34; manutenção">
-<td class="loc"><code>linha 10</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>blank-imports</code></td>
-<td>a blank import should be only in a main or test package, or have a comment justifying it<pre>_ &#34;github.com/jackc/pgx/v5/stdlib&#34;</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/db/db.go exported item público sem comentário de documentação. exported function connect should have comment or be unexported func connect() (*sql.db, error) { manutenção">
-<td class="loc"><code>linha 24</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>exported</code></td>
-<td>Item público sem comentário de documentação.<pre>func Connect() (*sql.DB, error) {</pre></td></tr>
-<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/db/db.go exported item público sem comentário de documentação. exported function ensureschema should have comment or be unexported func ensureschema(ctx context.context, conn *sql.db) error { manutenção">
-<td class="loc"><code>linha 41</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>exported</code></td>
-<td>Item público sem comentário de documentação.<pre>func EnsureSchema(ctx context.Context, conn *sql.DB) error {</pre></td></tr>
-</table></div></details>
-<details class="grp">
-<summary><code class="gfile">internal/handler/handler.go</code><span class="badges"><span class="b smell">4 manutenção</span></span><span class="gcount">4</span></summary>
-<div class="wrap"><table>
+<td>Pacote sem comentário de documentação no formato esperado. <span class="b new">novo</span><pre>package handler</pre></td></tr>
 <tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/handler/handler.go exported item público sem comentário de documentação. exported type handler should have comment or be unexported type handler struct { manutenção">
 <td class="loc"><code>linha 14</code></td>
 <td><span class="b smell">Manutenção</span></td>
@@ -216,13 +168,42 @@ tr.rrow:hover td{background:var(--chip)}
 <td>Item público sem comentário de documentação.<pre>func (h Handler) CreateItem(c *gin.Context) {</pre></td></tr>
 </table></div></details>
 <details class="grp">
-<summary><code class="gfile">internal/config/config.go</code><span class="badges"><span class="b smell">3 manutenção</span></span><span class="gcount">3</span></summary>
+<summary><code class="gfile">internal/handler/handler_test.go</code><span class="badges"><span class="b smell">5 manutenção</span></span><span class="gcount">5</span></summary>
 <div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="package-comments" data-new="0" data-text="internal/config/config.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package config manutenção">
+<tr class="item" data-cat="2" data-rule="gofmt" data-new="0" data-text="internal/handler/handler_test.go gofmt file is not properly formatted file is not properly formatted items      []model.item manutenção">
+<td class="loc"><code>linha 21</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>gofmt</code></td>
+<td>File is not properly formatted<pre>items      []model.Item</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/handler/handler_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _ func (m *mockitemrepository) create(ctx context.context, item *model.item) error { manutenção">
+<td class="loc"><code>linha 26</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (m *mockItemRepository) Create(ctx context.Context, item *model.Item) error {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/handler/handler_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _ setup:     func(m *mockitemrepository) {}, manutenção">
+<td class="loc"><code>linha 115</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>setup:     func(m *mockItemRepository) {},</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/handler/handler_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _ setup:     func(m *mockitemrepository) {}, manutenção">
+<td class="loc"><code>linha 122</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>setup:     func(m *mockItemRepository) {},</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/handler/handler_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;m&#39; seems to be unused, consider removing or renaming it as _ setup:     func(m *mockitemrepository) {}, manutenção">
+<td class="loc"><code>linha 129</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>setup:     func(m *mockItemRepository) {},</pre></td></tr>
+</table></div></details>
+<details class="grp" open>
+<summary><code class="gfile">internal/config/config.go</code><span class="badges"><span class="b smell">3 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">3</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="package-comments" data-new="1" data-text="internal/config/config.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package config manutenção">
 <td class="loc"><code>linha 1</code></td>
 <td><span class="b smell">Manutenção</span></td>
 <td><code>package-comments</code></td>
-<td>Pacote sem comentário de documentação no formato esperado.<pre>package config</pre></td></tr>
+<td>Pacote sem comentário de documentação no formato esperado. <span class="b new">novo</span><pre>package config</pre></td></tr>
 <tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/config/config.go exported item público sem comentário de documentação. exported type config should have comment or be unexported type config struct { manutenção">
 <td class="loc"><code>linha 5</code></td>
 <td><span class="b smell">Manutenção</span></td>
@@ -235,13 +216,46 @@ tr.rrow:hover td{background:var(--chip)}
 <td>Item público sem comentário de documentação.<pre>func Load() Config {</pre></td></tr>
 </table></div></details>
 <details class="grp">
-<summary><code class="gfile">internal/repository/item.go</code><span class="badges"><span class="b smell">3 manutenção</span></span><span class="gcount">3</span></summary>
+<summary><code class="gfile">internal/db/db.go</code><span class="badges"><span class="b smell">3 manutenção</span></span><span class="gcount">3</span></summary>
 <div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="package-comments" data-new="0" data-text="internal/repository/item.go package-comments pacote sem comentário de documentação no formato esperado. should have a package comment package repository manutenção">
-<td class="loc"><code>linha 1</code></td>
+<tr class="item" data-cat="2" data-rule="blank-imports" data-new="0" data-text="internal/db/db.go blank-imports a blank import should be only in a main or test package, or have a comment justifying it a blank import should be only in a main or test package, or have a comment justifying it _ &#34;github.com/jackc/pgx/v5/stdlib&#34; manutenção">
+<td class="loc"><code>linha 10</code></td>
 <td><span class="b smell">Manutenção</span></td>
-<td><code>package-comments</code></td>
-<td>Pacote sem comentário de documentação no formato esperado.<pre>package repository</pre></td></tr>
+<td><code>blank-imports</code></td>
+<td>a blank import should be only in a main or test package, or have a comment justifying it<pre>_ &#34;github.com/jackc/pgx/v5/stdlib&#34;</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/db/db.go exported item público sem comentário de documentação. exported function connect should have comment or be unexported func connect() (*sql.db, error) { manutenção">
+<td class="loc"><code>linha 24</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func Connect() (*sql.DB, error) {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/db/db.go exported item público sem comentário de documentação. exported function ensureschema should have comment or be unexported func ensureschema(ctx context.context, conn *sql.db) error { manutenção">
+<td class="loc"><code>linha 41</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>exported</code></td>
+<td>Item público sem comentário de documentação.<pre>func EnsureSchema(ctx context.Context, conn *sql.DB) error {</pre></td></tr>
+</table></div></details>
+<details class="grp">
+<summary><code class="gfile">internal/web/web_test.go</code><span class="badges"><span class="b smell">3 manutenção</span></span><span class="gcount">3</span></summary>
+<div class="wrap"><table>
+<tr class="item" data-cat="2" data-rule="gofmt" data-new="0" data-text="internal/web/web_test.go gofmt file is not properly formatted file is not properly formatted items   []model.item manutenção">
+<td class="loc"><code>linha 19</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>gofmt</code></td>
+<td>File is not properly formatted<pre>items   []model.Item</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/web/web_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _ func (m *mockwebitemrepository) create(ctx context.context, item *model.item) error { manutenção">
+<td class="loc"><code>linha 24</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (m *mockWebItemRepository) Create(ctx context.Context, item *model.Item) error {</pre></td></tr>
+<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="0" data-text="internal/web/web_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _ func (m *mockwebitemrepository) list(ctx context.context) ([]model.item, error) { manutenção">
+<td class="loc"><code>linha 32</code></td>
+<td><span class="b smell">Manutenção</span></td>
+<td><code>unused-parameter</code></td>
+<td>Parâmetro nunca usado; renomeie para _ ou remova.<pre>func (m *mockWebItemRepository) List(ctx context.Context) ([]model.Item, error) {</pre></td></tr>
+</table></div></details>
+<details class="grp">
+<summary><code class="gfile">internal/repository/item.go</code><span class="badges"><span class="b smell">2 manutenção</span></span><span class="gcount">2</span></summary>
+<div class="wrap"><table>
 <tr class="item" data-cat="2" data-rule="exported" data-new="0" data-text="internal/repository/item.go exported item público sem comentário de documentação. exported type itemrepository should have comment or be unexported type itemrepository interface { manutenção">
 <td class="loc"><code>linha 12</code></td>
 <td><span class="b smell">Manutenção</span></td>
@@ -262,40 +276,22 @@ tr.rrow:hover td{background:var(--chip)}
 <td><code>exitAfterDefer</code></td>
 <td>log.Fatalf will exit, and `defer cancel()` will not run<pre>log.Fatalf(&#34;graceful shutdown failed: %v&#34;, err)</pre></td></tr>
 </table></div></details>
-<details class="grp">
-<summary><code class="gfile">internal/config/config_test.go</code><span class="badges"><span class="b smell">1 manutenção</span></span><span class="gcount">1</span></summary>
-<div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="gofmt" data-new="0" data-text="internal/config/config_test.go gofmt file is not properly formatted file is not properly formatted name      string manutenção">
-<td class="loc"><code>linha 10</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>gofmt</code></td>
-<td>File is not properly formatted<pre>name      string</pre></td></tr>
-</table></div></details>
-<details class="grp">
-<summary><code class="gfile">internal/db/db_test.go</code><span class="badges"><span class="b smell">1 manutenção</span></span><span class="gcount">1</span></summary>
-<div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="gofmt" data-new="0" data-text="internal/db/db_test.go gofmt file is not properly formatted file is not properly formatted name     string manutenção">
-<td class="loc"><code>linha 10</code></td>
-<td><span class="b smell">Manutenção</span></td>
-<td><code>gofmt</code></td>
-<td>File is not properly formatted<pre>name     string</pre></td></tr>
-</table></div></details>
 <details class="grp" open>
-<summary><code class="gfile">internal/web/web_test.go</code><span class="badges"><span class="b smell">1 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">1</span></summary>
+<summary><code class="gfile">internal/config/config_test.go</code><span class="badges"><span class="b smell">1 manutenção</span><span class="b new">1 novo(s)</span></span><span class="gcount">1</span></summary>
 <div class="wrap"><table>
-<tr class="item" data-cat="2" data-rule="unused-parameter" data-new="1" data-text="internal/web/web_test.go unused-parameter parâmetro nunca usado; renomeie para _ ou remova. parameter &#39;ctx&#39; seems to be unused, consider removing or renaming it as _ func (m *mockwebitemrepository) create(ctx context.context, item *model.item) error { manutenção">
-<td class="loc"><code>linha 24</code></td>
+<tr class="item" data-cat="2" data-rule="gofmt" data-new="1" data-text="internal/config/config_test.go gofmt file is not properly formatted file is not properly formatted name      string manutenção">
+<td class="loc"><code>linha 10</code></td>
 <td><span class="b smell">Manutenção</span></td>
-<td><code>unused-parameter</code></td>
-<td>Parâmetro nunca usado; renomeie para _ ou remova. <span class="b new">novo</span><pre>func (m *mockWebItemRepository) Create(ctx context.Context, item *model.Item) error {</pre></td></tr>
+<td><code>gofmt</code></td>
+<td>File is not properly formatted <span class="b new">novo</span><pre>name      string</pre></td></tr>
 </table></div></details>
 
 
 <details class="fixed"><summary><span class="gfile">Corrigidos desde a última execução</span><span class="gcount">3</span></summary>
 <div class="wrap"><table>
-<tr><td>Manutenção</td><td><code>internal/handler/handler_test.go</code></td><td><code>unused-parameter</code></td><td>Parâmetro nunca usado; renomeie para _ ou remova.</td></tr>
-<tr><td>Manutenção</td><td><code>internal/model/item.go</code></td><td><code>package-comments</code></td><td>Pacote sem comentário de documentação no formato esperado.</td></tr>
-<tr><td>Manutenção</td><td><code>tools/lintreport/lintreport_test.go</code></td><td><code>gofmt</code></td><td>File is not properly formatted</td></tr>
+<tr><td>Manutenção</td><td><code>cmd/api/main.go</code></td><td><code>package-comments</code></td><td>Pacote sem comentário de documentação no formato esperado.</td></tr>
+<tr><td>Manutenção</td><td><code>internal/db/db.go</code></td><td><code>package-comments</code></td><td>Pacote sem comentário de documentação no formato esperado.</td></tr>
+<tr><td>Manutenção</td><td><code>internal/db/db_test.go</code></td><td><code>gofmt</code></td><td>File is not properly formatted</td></tr>
 </table></div></details>
 
 <h2>Regras mais frequentes <span class="sub">(clique para filtrar)</span></h2>
